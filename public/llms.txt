@@ -1,0 +1,21 @@
+# Z1RON
+
+> 李子榕（Tzu-Jung Li）的個人研究與經歷網站。
+
+Canonical URL: https://z1ron.com/
+Language: Traditional Chinese (zh-Hant)
+
+## Profile
+
+李子榕主修數學並雙主修資訊工程，關注演算法、資料結構、物聯網、邊緣計算與 K-Nearest Neighbors。
+
+## Primary sections
+
+- Research and profile: https://z1ron.com/#work
+- Experience: https://z1ron.com/#about
+- Contact: https://z1ron.com/#contact
+
+## Contact
+
+- Email: andky32199@gmail.com
+

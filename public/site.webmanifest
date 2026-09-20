@@ -1,0 +1,13 @@
+{
+  "name": "李子榕 — Z1RON",
+  "short_name": "Z1RON",
+  "description": "數學、資訊工程與物聯網研究個人網站。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eeeee8",
+  "theme_color": "#eeeee8",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
+

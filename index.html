@@ -5,21 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#eeeee8" />
     <meta name="description" content="李子榕｜數學、資訊工程與物聯網研究個人網站。" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://z1ron.com/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:title" content="李子榕 TZU-JUNG LI — Z1RON" />
     <meta property="og:description" content="用數學理解問題，以程式建構解法。" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://z1ron.com" />
+    <meta property="og:url" content="https://z1ron.com/" />
+    <meta property="og:site_name" content="Z1RON" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:image" content="https://z1ron.com/assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Z1RON 數學、資訊工程與物聯網研究個人網站視覺" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="李子榕 TZU-JUNG LI — Z1RON" />
+    <meta name="twitter:description" content="用數學理解問題，以程式建構解法。" />
+    <meta name="twitter:image" content="https://z1ron.com/assets/og-image.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Syne:wght@500;600;700&display=swap" rel="stylesheet" />
     <title>李子榕 TZU-JUNG LI — Z1RON</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://z1ron.com/#website",
+            "url": "https://z1ron.com/",
+            "name": "Z1RON",
+            "inLanguage": "zh-Hant",
+            "publisher": { "@id": "https://z1ron.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://z1ron.com/#person",
+            "name": "李子榕",
+            "alternateName": "Tzu-Jung Li",
+            "url": "https://z1ron.com/",
+            "image": "https://z1ron.com/assets/portrait.png",
+            "email": "mailto:andky32199@gmail.com",
+            "description": "主修數學、雙主修資訊工程，專注於演算法、資料結構與物聯網系統研究。",
+            "affiliation": {
+              "@type": "CollegeOrUniversity",
+              "name": "國立中正大學"
+            },
+            "knowsAbout": ["Mathematics", "Computer Science", "Internet of Things", "Algorithms", "K-Nearest Neighbors"]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">跳至主要內容</a>
     <div class="noise" aria-hidden="true"></div>
     <div class="cursor-glow" aria-hidden="true"></div>
 
     <header class="site-header" data-header>
-      <a class="wordmark magnetic" href="#top" aria-label="Z1RON 首頁">Z1RON<span>.</span></a>
+      <a class="wordmark magnetic" href="#main-content" aria-label="Z1RON 首頁">Z1RON<span>.</span></a>
       <nav class="desktop-nav" aria-label="主要導覽">
         <a href="#work">研究</a>
         <a href="#about">經歷</a>
@@ -37,22 +83,28 @@
       <p>TAIWAN · <span data-local-time>00:00</span></p>
     </nav>
 
-    <main id="top">
+    <main id="main-content">
       <section class="hero section-shell">
         <div class="hero-meta reveal">
           <span class="status"><i></i> OPEN TO RESEARCH &amp; COLLABORATION</span>
           <span>PORTFOLIO / 2026</span>
         </div>
 
-        <div class="hero-title" aria-label="Ideas into impact">
-          <div class="title-row"><span class="eyebrow reveal">I model</span><h1 class="split-text">MATH</h1></div>
-          <div class="title-row title-row--offset"><h1 class="split-text">WITH</h1><span class="hero-orbit hero-portrait reveal" aria-hidden="true"><img src="/assets/portrait.png" alt="" /><i></i></span></div>
-          <div class="title-row"><h1 class="split-text italic">CODE.</h1></div>
+        <div class="hero-title">
+          <h1 class="hero-heading" aria-label="Math with code">
+            <span class="title-row title-row--math">
+              <span class="eyebrow reveal" aria-hidden="true">I model</span>
+              <span class="hero-word split-text">MATH</span>
+              <span class="hero-portrait reveal"><img src="/assets/portrait.png" alt="李子榕個人照片" /></span>
+            </span>
+            <span class="title-row title-row--offset"><span class="hero-word split-text">WITH</span></span>
+            <span class="title-row"><span class="hero-word split-text italic">CODE.</span></span>
+          </h1>
         </div>
 
         <div class="hero-footer reveal">
           <p>嗨，我是 <strong>李子榕 Tzu-Jung Li</strong>。主修數學、雙主修資訊工程，專注於演算法、資料結構與物聯網系統研究。</p>
-          <a class="round-link magnetic" href="#work" aria-label="向下瀏覽精選作品">
+          <a class="round-link magnetic" href="#work" aria-label="向下瀏覽研究與亮點">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
           </a>
         </div>
@@ -73,31 +125,31 @@
         </header>
 
         <div class="project-list">
-          <article class="project-card reveal" tabindex="0">
+          <article class="project-card reveal" aria-labelledby="project-knn">
             <div class="project-visual visual-one">
               <span class="project-index">01 / 03</span>
               <div class="device-mockup"><div class="mock-line"></div><div class="mock-circle"><b>K</b></div><p>NEAREST<br />NEIGHBOR.</p></div>
               <span class="view-project">RESEARCH / 2025</span>
             </div>
-            <div class="project-info"><h3>KNN × 物聯網資料探勘</h3><p>裝置選擇 · 群播路由最佳化</p></div>
+            <div class="project-info"><h3 id="project-knn">KNN × 物聯網資料探勘</h3><p>裝置選擇 · 群播路由最佳化</p></div>
           </article>
 
-          <article class="project-card reveal" tabindex="0">
+          <article class="project-card reveal" aria-labelledby="project-study">
             <div class="project-visual visual-two">
               <span class="project-index">02 / 03</span>
               <div class="signal-art" aria-hidden="true"><span></span><span></span><span></span><span></span><b>Z</b></div>
               <span class="view-project">ACADEMIC / CCU</span>
             </div>
-            <div class="project-info"><h3>跨域雙主修</h3><p>數學系 · 資訊工程學系</p></div>
+            <div class="project-info"><h3 id="project-study">跨域雙主修</h3><p>數學系 · 資訊工程學系</p></div>
           </article>
 
-          <article class="project-card reveal" tabindex="0">
+          <article class="project-card reveal" aria-labelledby="project-leadership">
             <div class="project-visual visual-three">
               <span class="project-index">03 / 03</span>
               <div class="type-art" aria-hidden="true"><span>03</span><strong>LEARN<br />LEAD<br />TEACH</strong><i></i></div>
               <span class="view-project">COMMUNITY / TEAM</span>
             </div>
-            <div class="project-info"><h3>教學與領導</h3><p>課程助教 · 羽球隊隊長 · 美宣幹部</p></div>
+            <div class="project-info"><h3 id="project-leadership">教學與領導</h3><p>課程助教 · 羽球隊隊長 · 美宣幹部</p></div>
           </article>
         </div>
       </section>
@@ -132,7 +184,7 @@
           <a class="contact-link split-text" href="mailto:andky32199@gmail.com">SAY HELLO</a>
           <footer>
             <p>© <span data-year></span> Z1RON</p>
-            <div><a href="mailto:andky32199@gmail.com">EMAIL</a><a href="#top">BACK TO TOP ↑</a></div>
+            <div><a href="mailto:andky32199@gmail.com">EMAIL</a><a href="#main-content">BACK TO TOP ↑</a></div>
           </footer>
         </div>
       </section>
