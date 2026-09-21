@@ -75,7 +75,7 @@ const updatePinnedCard = (current) => {
   }
   const end = Math.max(window.innerHeight * 2.8, (aboutSection?.offsetTop || 5200) - window.innerHeight * .35);
   const p = clamp(current / end);
-  const travel = Math.min(420, window.innerWidth * .25);
+  const travel = Math.min(240, window.innerWidth * .17);
   const x = mix(0, travel, p / .2);
   const y = mix(0, 70, p / .2);
   const z = p < .2 ? mix(0, 8, p / .2) : mix(8, 0, (p - .2) / .25);
