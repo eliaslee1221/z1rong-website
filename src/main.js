@@ -121,10 +121,12 @@ const updatePinnedCard = (current) => {
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
   const aboutTop = aboutSection?.offsetTop || end + window.innerHeight;
   const aboutBottom = aboutTop + (aboutSection?.offsetHeight || window.innerHeight);
-  const fadeStart = aboutBottom - window.innerHeight * .03;
-  const fadeEnd = aboutBottom + window.innerHeight * .14;
-  pinnedCard.style.opacity = String(1 - clamp((current - fadeStart) / (fadeEnd - fadeStart)));
-  pinnedCard.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale})`;
+  const fadeStart = aboutTop + (aboutBottom - aboutTop) * .34;
+  const fadeEnd = aboutBottom - Math.min(window.innerHeight * .08, (aboutBottom - aboutTop) * .1);
+  const departure = clamp((current - fadeStart) / Math.max(1, fadeEnd - fadeStart));
+  const departureScale = mix(1, .64, departure);
+  pinnedCard.style.opacity = String(1 - departure);
+  pinnedCard.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale * departureScale})`;
   pinnedCardInner.style.transform = `rotateY(${rotateY}deg)`;
 };
 
@@ -132,7 +134,7 @@ let visualScroll = window.scrollY;
 let targetScroll = window.scrollY;
 let scrollFrame = 0;
 const renderScrollMotion = () => {
-  const easing = reducedMotion ? 1 : .14;
+  const easing = reducedMotion ? 1 : .1;
   visualScroll += (targetScroll - visualScroll) * easing;
   if (Math.abs(targetScroll - visualScroll) < .12) visualScroll = targetScroll;
   updatePinnedCard(visualScroll);
@@ -173,7 +175,7 @@ if (!reducedMotion && finePointer) {
 
   const renderWheelMotion = () => {
     const current = window.scrollY;
-    const next = current + (wheelTarget - current) * .16;
+    const next = current + (wheelTarget - current) * .1;
     window.scrollTo(0, Math.abs(wheelTarget - next) < .35 ? wheelTarget : next);
     if (Math.abs(wheelTarget - window.scrollY) > .5) wheelFrame = window.requestAnimationFrame(renderWheelMotion);
     else {
@@ -191,7 +193,7 @@ if (!reducedMotion && finePointer) {
       const distance = Math.abs(section.offsetTop - wheelTarget);
       return !best || distance < best.distance ? { section, distance } : best;
     }, null);
-    if (closest && closest.distance < window.innerHeight * .24) {
+    if (closest && closest.distance < window.innerHeight * .3) {
       wheelTarget = closest.section.offsetTop;
       document.documentElement.classList.add('is-wheel-smoothing');
       requestWheelMotion();
@@ -202,13 +204,13 @@ if (!reducedMotion && finePointer) {
     if (window.innerWidth <= 900 || event.ctrlKey || event.metaKey) return;
     event.preventDefault();
     const unit = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? window.innerHeight : 1;
-    const delta = clamp(event.deltaY * unit, -260, 260);
+    const delta = clamp(event.deltaY * unit, -320, 320);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     wheelTarget = clamp(wheelTarget + delta, 0, max);
     document.documentElement.classList.add('is-wheel-smoothing');
     requestWheelMotion();
     window.clearTimeout(wheelSettleTimer);
-    wheelSettleTimer = window.setTimeout(settleToNearbySection, 150);
+    wheelSettleTimer = window.setTimeout(settleToNearbySection, 180);
   }, { passive:false });
 
   window.addEventListener('pointerdown', () => {
