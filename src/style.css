@@ -835,6 +835,7 @@ body { font-weight:500; }
 }
 
 /* Integrated light metrics ribbon — no dark separator between sections. */
+.about-anchor { position:relative; background:var(--paper); }
 .metrics-ticker { position:relative; width:min(67rem,calc(100% - 5rem)); margin-inline:auto; color:#a2a2a2; background:var(--paper); border:0; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); }
 .metrics-ticker .ticker-track { min-width:max-content; padding-block:3.2rem; justify-content:center; }
 .metrics-ticker span { color:#a2a2a2; font:500 clamp(.68rem,.8vw,.84rem)/1 var(--sans); letter-spacing:-.025em; text-transform:none; }
