@@ -84,7 +84,7 @@ const updateNavIndicator = (current) => {
 
 const updateAbilityStack = () => {
   if (window.innerWidth <= 900) {
-    abilityCards.forEach((card) => card.classList.remove('is-buried'));
+    abilityCards.forEach((card) => card.classList.remove('is-buried', 'is-under'));
     return;
   }
   let activeIndex = -1;
@@ -94,6 +94,7 @@ const updateAbilityStack = () => {
   });
   abilityCards.forEach((card, index) => {
     card.classList.toggle('is-buried', activeIndex >= 2 && index < activeIndex - 1);
+    card.classList.toggle('is-under', activeIndex >= 1 && index === activeIndex - 1);
   });
 };
 
@@ -118,25 +119,45 @@ const updatePinnedCard = (current) => {
   let scale = 1;
   if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
-  pinnedCard.style.opacity = String(1 - clamp((p - .86) / .14));
-  pinnedCard.style.transform = `translate(-50%,-46%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale})`;
+  const aboutTop = aboutSection?.offsetTop || end + window.innerHeight;
+  const fadeStart = aboutTop - window.innerHeight * .08;
+  const fadeEnd = aboutTop + window.innerHeight * .48;
+  pinnedCard.style.opacity = String(1 - clamp((current - fadeStart) / (fadeEnd - fadeStart)));
+  pinnedCard.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale})`;
   pinnedCardInner.style.transform = `rotateY(${rotateY}deg)`;
+};
+
+let visualScroll = window.scrollY;
+let targetScroll = window.scrollY;
+let scrollFrame = 0;
+const renderScrollMotion = () => {
+  const easing = reducedMotion ? 1 : .14;
+  visualScroll += (targetScroll - visualScroll) * easing;
+  if (Math.abs(targetScroll - visualScroll) < .12) visualScroll = targetScroll;
+  updatePinnedCard(visualScroll);
+  updateNavIndicator(visualScroll);
+  if (visualScroll !== targetScroll) scrollFrame = window.requestAnimationFrame(renderScrollMotion);
+  else scrollFrame = 0;
+};
+const requestScrollMotion = () => {
+  if (!scrollFrame) scrollFrame = window.requestAnimationFrame(renderScrollMotion);
 };
 
 const handleScroll = () => {
   const current = window.scrollY;
   const max = document.documentElement.scrollHeight - window.innerHeight;
+  targetScroll = current;
   progress.style.transform = `scaleX(${max > 0 ? current / max : 0})`;
-  updatePinnedCard(current);
-  updateNavIndicator(current);
   updateAbilityStack();
+  requestScrollMotion();
   lastScroll = current;
 };
 window.addEventListener('scroll', handleScroll, { passive: true });
 handleScroll();
 window.addEventListener('resize', () => {
-  updatePinnedCard(window.scrollY);
-  updateNavIndicator(window.scrollY);
+  visualScroll = targetScroll = window.scrollY;
+  updatePinnedCard(visualScroll);
+  updateNavIndicator(visualScroll);
   updateAbilityStack();
 });
 window.addEventListener('load', () => updateNavIndicator(window.scrollY), { once: true });
