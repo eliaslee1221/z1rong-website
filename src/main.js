@@ -8,6 +8,9 @@ const loader = document.querySelector('[data-loader]');
 const menuButton = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
 const progress = document.querySelector('[data-progress]');
+const pinnedCard = document.querySelector('.hero-portrait');
+const pinnedCardInner = pinnedCard?.querySelector('.scroll-card');
+const aboutSection = document.querySelector('#about');
 
 body.classList.add('is-loading');
 
@@ -35,8 +38,18 @@ const finishLoading = () => {
 };
 
 if (reducedMotion) finishLoading();
-else window.addEventListener('load', () => window.setTimeout(finishLoading, 900), { once: true });
-window.setTimeout(finishLoading, 2600);
+else {
+  const greeting = document.querySelector('[data-greeting]');
+  const greetings = ['HELLO', 'CIAO', 'HOLA', 'SALUT', '你好', 'ПРИВЕТ', 'HALLO', 'OLÁ', 'SELAM', 'مرحبا'];
+  let greetingIndex = 0;
+  const greetingTimer = window.setInterval(() => {
+    greetingIndex += 1;
+    if (greeting) greeting.textContent = greetings[greetingIndex % greetings.length];
+    if (greetingIndex >= greetings.length - 1) window.clearInterval(greetingTimer);
+  }, 135);
+  window.addEventListener('load', () => window.setTimeout(finishLoading, 1850), { once: true });
+}
+window.setTimeout(finishLoading, 3200);
 
 function setMenu(open) {
   body.classList.toggle('menu-open', open);
@@ -49,20 +62,51 @@ mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click'
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
 
 let lastScroll = window.scrollY;
+const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
+const mix = (from, to, amount) => from + (to - from) * clamp(amount);
+
+const updatePinnedCard = (current) => {
+  if (!pinnedCard || !pinnedCardInner) return;
+  if (window.innerWidth <= 900 || reducedMotion) {
+    pinnedCard.style.opacity = '1';
+    pinnedCard.style.transform = '';
+    pinnedCardInner.style.transform = '';
+    return;
+  }
+  const end = Math.max(window.innerHeight * 2.8, (aboutSection?.offsetTop || 5200) - window.innerHeight * .35);
+  const p = clamp(current / end);
+  const travel = Math.min(420, window.innerWidth * .25);
+  const x = mix(0, travel, p / .2);
+  const y = mix(0, 70, p / .2);
+  const z = p < .2 ? mix(0, 8, p / .2) : mix(8, 0, (p - .2) / .25);
+  let rotateY = 0;
+  if (p >= .2 && p < .45) rotateY = mix(0, 180, (p - .2) / .25);
+  else if (p >= .45 && p < .8) rotateY = 180;
+  else if (p >= .8) rotateY = mix(180, 360, (p - .8) / .2);
+  let scale = 1;
+  if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
+  else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
+  pinnedCard.style.opacity = String(1 - clamp((p - .86) / .14));
+  pinnedCard.style.transform = `translate(-50%,-46%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale})`;
+  pinnedCardInner.style.transform = `rotateY(${rotateY}deg)`;
+};
+
 const handleScroll = () => {
   const current = window.scrollY;
   const max = document.documentElement.scrollHeight - window.innerHeight;
   header.classList.toggle('is-scrolled', current > 20);
-  const darkAtTop = [...document.querySelectorAll('.surface-lab, .research, .contact')].some((section) => {
+  const darkAtTop = [...document.querySelectorAll('.research, .recognition, .testimonials, .contact')].some((section) => {
     const box = section.getBoundingClientRect();
     return box.top <= 40 && box.bottom > 40;
   });
   header.classList.toggle('on-dark', darkAtTop);
   progress.style.transform = `scaleX(${max > 0 ? current / max : 0})`;
+  updatePinnedCard(current);
   lastScroll = current;
 };
 window.addEventListener('scroll', handleScroll, { passive: true });
 handleScroll();
+window.addEventListener('resize', () => updatePinnedCard(window.scrollY));
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -373,6 +417,34 @@ document.querySelectorAll('.faq-list details').forEach((details) => {
       if (other !== details) other.open = false;
     });
   });
+});
+
+document.querySelector('.about-actions button')?.addEventListener('click', async (event) => {
+  const button = event.currentTarget;
+  try {
+    await navigator.clipboard.writeText('hello@example.com');
+    button.textContent = 'EMAIL COPIED ✓';
+    window.setTimeout(() => { button.textContent = 'COPY EMAIL'; }, 1800);
+  } catch {
+    button.textContent = 'hello@example.com';
+  }
+});
+
+const navBlur = document.createElement('div');
+navBlur.className = 'nav-blur';
+navBlur.setAttribute('aria-hidden', 'true');
+document.body.append(navBlur);
+
+document.querySelector('.contact-form')?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const status = form.querySelector('.form-status');
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    status.textContent = 'PLEASE COMPLETE EVERY REQUIRED FIELD.';
+    return;
+  }
+  status.textContent = 'FORM INTERACTION READY — DELIVERY ADDRESS WILL BE CONNECTED WITH YOUR FINAL CONTENT.';
 });
 
 document.querySelectorAll('a, button, .ability').forEach((element) => {

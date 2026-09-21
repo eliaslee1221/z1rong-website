@@ -1,7 +1,7 @@
 {
-  "name": "李子榕 — Z1RON",
-  "short_name": "Z1RON",
-  "description": "數學、資訊工程與物聯網研究個人網站。",
+  "name": "Creative Portfolio Template",
+  "short_name": "Portfolio",
+  "description": "A complete editorial creative portfolio template.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#eeeee8",
@@ -10,3 +10,4 @@
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }
+

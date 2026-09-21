@@ -1,20 +1,18 @@
-# Z1RON
+# Creative Portfolio Template
 
-> 李子榕（Tzu-Jung Li）的個人研究與經歷網站。
+> An editorial portfolio template awaiting final personal content.
 
 Canonical URL: https://z1ron.com/
 Language: Traditional Chinese (zh-Hant)
 
-## Profile
+## Current status
 
-李子榕主修數學並雙主修資訊工程，關注演算法、資料結構、物聯網、邊緣計算與 K-Nearest Neighbors。
+The site currently contains labeled placeholder copy and original geometric media. Personal information will be added in a later revision.
 
 ## Primary sections
 
-- Research and profile: https://z1ron.com/#work
-- Experience: https://z1ron.com/#about
+- Skills: https://z1ron.com/#skills
+- Selected work: https://z1ron.com/#work
+- Experience: https://z1ron.com/#career
 - Contact: https://z1ron.com/#contact
 
-## Contact
-
-- Email: andky32199@gmail.com
