@@ -120,8 +120,9 @@ const updatePinnedCard = (current) => {
   if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
   const aboutTop = aboutSection?.offsetTop || end + window.innerHeight;
-  const fadeStart = aboutTop - window.innerHeight * .08;
-  const fadeEnd = aboutTop + window.innerHeight * .48;
+  const aboutBottom = aboutTop + (aboutSection?.offsetHeight || window.innerHeight);
+  const fadeStart = aboutBottom - window.innerHeight * .18;
+  const fadeEnd = aboutBottom + window.innerHeight * .38;
   pinnedCard.style.opacity = String(1 - clamp((current - fadeStart) / (fadeEnd - fadeStart)));
   pinnedCard.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale})`;
   pinnedCardInner.style.transform = `rotateY(${rotateY}deg)`;
