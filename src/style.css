@@ -840,3 +840,36 @@ body { font-weight:500; }
 .metrics-ticker span { color:#a2a2a2; font:500 clamp(.68rem,.8vw,.84rem)/1 var(--sans); letter-spacing:-.025em; text-transform:none; }
 .metrics-ticker i { color:#bababa; }
 
+/* Crisp vector orbital system: SVG paths avoid perspective raster distortion. */
+.hero-math-space::before, .hero-math-space > i { display:none!important; }
+.orbital-system { position:absolute; inset:0; width:100%; height:100%; overflow:visible; shape-rendering:geometricPrecision; }
+.orbital-core { fill:url(#core-halo); }
+.orbital-path { fill:none; stroke-linecap:round; stroke-width:1.15; vector-effect:non-scaling-stroke; }
+.orbital-path--orange { stroke:rgba(229,129,0,.42); }
+.orbital-path--ink { stroke:rgba(48,48,48,.22); }
+.orbital-path--soft { stroke:rgba(48,48,48,.12); }
+.orbital-path--dash { stroke:rgba(48,48,48,.2); stroke-dasharray:4 7; }
+.orbital-path--inner { stroke:rgba(229,129,0,.2); }
+.orbital-path--ghost { stroke:rgba(48,48,48,.09); stroke-dasharray:12 9; }
+.orbit-plane { filter:drop-shadow(0 .32rem .55rem rgba(48,48,48,.035)); }
+.orbital-node { filter:url(#orbital-glow); animation:orbital-twinkle 3.2s ease-in-out infinite; }
+.orbital-node--orange { fill:url(#node-orange); }
+.orbital-node--silver { fill:url(#node-silver); animation-delay:-1.6s; }
+.orbit-plane--two, .orbit-plane--five { opacity:.82; }
+.orbit-plane--four, .orbit-plane--six { opacity:.62; }
+
+@keyframes orbital-twinkle {
+  0%,100% { opacity:.45; }
+  46% { opacity:.88; }
+  58% { opacity:.68; }
+}
+
+@media (max-width:900px) {
+  .orbital-system { inset:8% -12%; width:124%; height:84%; }
+  .orbital-path { stroke-width:.9; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .orbital-node { animation:none; opacity:.7; }
+}
+

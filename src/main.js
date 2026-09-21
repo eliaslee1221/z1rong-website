@@ -13,6 +13,7 @@ const desktopNav = document.querySelector('.desktop-nav');
 const navIndicator = desktopNav?.querySelector('.nav-indicator');
 const navLinks = [...(desktopNav?.querySelectorAll('a[href^="#"]') || [])];
 const navSections = navLinks.map((link) => document.querySelector(link.hash));
+if (reducedMotion) document.querySelector('.orbital-system')?.pauseAnimations?.();
 
 body.classList.add('is-loading');
 
