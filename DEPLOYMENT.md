@@ -32,4 +32,3 @@
 ## 後續更新
 
 每次更新並推送至 `main` 後，Cloudflare Pages 會自動重新建置與發布。Pull Request 也可以產生獨立預覽網址，確認後再合併到正式環境。
-

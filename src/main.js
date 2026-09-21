@@ -111,4 +111,3 @@ document.querySelectorAll('a, button, .project-card').forEach((element) => {
     element.addEventListener(type, () => element.classList.remove('is-pressed'));
   });
 });
-

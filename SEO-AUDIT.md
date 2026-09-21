@@ -34,4 +34,3 @@ Audit date: 2026-09-21
 - Kept the complete portrait visible to the right of `MATH` with `object-fit: contain` and no crop mask.
 - Added mobile-specific sizing at 800 px and 420 px breakpoints.
 - Preserved `prefers-reduced-motion` behavior and keyboard skip navigation.
-

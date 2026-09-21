@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://z1ron.com/sitemap.xml
-

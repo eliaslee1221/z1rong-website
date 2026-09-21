@@ -32,4 +32,3 @@ Production SEO、routing、accessibility 與效能檢查請見 [SEO-AUDIT.md](./
 - 滾動進場、跑馬燈、磁吸按鈕、卡片視差等微互動
 - 滑鼠、鍵盤與觸控皆有操作回饋
 - 響應式版面與 `prefers-reduced-motion` 無障礙支援
-
