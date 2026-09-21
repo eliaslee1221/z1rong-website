@@ -835,8 +835,8 @@ body { font-weight:500; }
 }
 
 /* Integrated light metrics ribbon — no dark separator between sections. */
-.metrics-ticker { color:#a2a2a2; background:var(--paper); border:0; }
-.metrics-ticker .ticker-track { padding-block:3.2rem; }
+.metrics-ticker { position:relative; width:min(67rem,calc(100% - 5rem)); margin-inline:auto; color:#a2a2a2; background:var(--paper); border:0; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); }
+.metrics-ticker .ticker-track { min-width:max-content; padding-block:3.2rem; justify-content:center; }
 .metrics-ticker span { color:#a2a2a2; font:500 clamp(.68rem,.8vw,.84rem)/1 var(--sans); letter-spacing:-.025em; text-transform:none; }
 .metrics-ticker i { color:#bababa; }
 
@@ -851,12 +851,23 @@ body { font-weight:500; }
 .orbital-path--dash { stroke:rgba(48,48,48,.2); stroke-dasharray:4 7; }
 .orbital-path--inner { stroke:rgba(229,129,0,.2); }
 .orbital-path--ghost { stroke:rgba(48,48,48,.09); stroke-dasharray:12 9; }
-.orbit-plane { filter:drop-shadow(0 .32rem .55rem rgba(48,48,48,.035)); }
+.orbit-plane { transform-box:view-box; transform-origin:600px 350px; filter:drop-shadow(0 .32rem .55rem rgba(48,48,48,.035)); animation:orbit-plane-turn var(--orbit-speed,32s) linear infinite; will-change:transform; }
 .orbital-node { filter:url(#orbital-glow); animation:orbital-twinkle 3.2s ease-in-out infinite; }
 .orbital-node--orange { fill:url(#node-orange); }
 .orbital-node--silver { fill:url(#node-silver); animation-delay:-1.6s; }
+.orbit-plane--one { --orbit-start:7deg; --orbit-turn:367deg; --orbit-speed:38s; }
+.orbit-plane--two { --orbit-start:64deg; --orbit-turn:-296deg; --orbit-speed:46s; }
+.orbit-plane--three { --orbit-start:-35deg; --orbit-turn:325deg; --orbit-speed:54s; }
+.orbit-plane--four { --orbit-start:108deg; --orbit-turn:-252deg; --orbit-speed:42s; }
+.orbit-plane--five { --orbit-start:27deg; --orbit-turn:387deg; --orbit-speed:34s; }
+.orbit-plane--six { --orbit-start:-73deg; --orbit-turn:-433deg; --orbit-speed:60s; }
 .orbit-plane--two, .orbit-plane--five { opacity:.82; }
 .orbit-plane--four, .orbit-plane--six { opacity:.62; }
+
+@keyframes orbit-plane-turn {
+  from { transform:rotate(var(--orbit-start)); }
+  to { transform:rotate(var(--orbit-turn)); }
+}
 
 @keyframes orbital-twinkle {
   0%,100% { opacity:.45; }
@@ -865,11 +876,13 @@ body { font-weight:500; }
 }
 
 @media (max-width:900px) {
+  .metrics-ticker { width:calc(100% - 1rem); -webkit-mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); }
   .orbital-system { inset:8% -12%; width:124%; height:84%; }
   .orbital-path { stroke-width:.9; }
 }
 
 @media (prefers-reduced-motion:reduce) {
+  .orbit-plane { animation:none; transform:rotate(var(--orbit-start)); }
   .orbital-node { animation:none; opacity:.7; }
 }
 

@@ -107,11 +107,12 @@ const updatePinnedCard = (current) => {
     pinnedCardInner.style.transform = '';
     return;
   }
-  const end = Math.max(window.innerHeight * 2.8, (aboutSection?.offsetTop || 5200) - window.innerHeight * .35);
+  const aboutTop = aboutSection?.offsetTop || 5200;
+  const end = Math.max(window.innerHeight * 2.8, aboutTop - window.innerHeight * .46);
   const p = clamp(current / end);
   const travel = Math.min(340, window.innerWidth * .18);
   const x = mix(0, travel, p / .2);
-  const y = mix(0, 70, p / .2);
+  const y = mix(0, window.innerHeight * .035, p / .2);
   const z = p < .2 ? mix(0, 8, p / .2) : mix(8, 0, (p - .2) / .25);
   let rotateY = 0;
   if (p >= .2 && p < .45) rotateY = mix(0, 180, (p - .2) / .25);
@@ -120,7 +121,6 @@ const updatePinnedCard = (current) => {
   let scale = 1;
   if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
-  const aboutTop = aboutSection?.offsetTop || end + window.innerHeight;
   const aboutBottom = aboutTop + (aboutSection?.offsetHeight || window.innerHeight);
   const fadeStart = aboutTop + (aboutBottom - aboutTop) * .34;
   const fadeEnd = aboutBottom - Math.min(window.innerHeight * .08, (aboutBottom - aboutTop) * .1);
@@ -173,10 +173,11 @@ if (!reducedMotion && finePointer) {
   let wheelTarget = window.scrollY;
   let wheelFrame = 0;
   let wheelSettleTimer = 0;
+  let wheelVelocity = 0;
 
   const renderWheelMotion = () => {
     const current = window.scrollY;
-    const next = current + (wheelTarget - current) * .1;
+    const next = current + (wheelTarget - current) * .075;
     window.scrollTo(0, Math.abs(wheelTarget - next) < .35 ? wheelTarget : next);
     if (Math.abs(wheelTarget - window.scrollY) > .5) wheelFrame = window.requestAnimationFrame(renderWheelMotion);
     else {
@@ -194,7 +195,7 @@ if (!reducedMotion && finePointer) {
       const distance = Math.abs(section.offsetTop - wheelTarget);
       return !best || distance < best.distance ? { section, distance } : best;
     }, null);
-    if (closest && closest.distance < window.innerHeight * .3) {
+    if (closest && closest.distance < window.innerHeight * .42) {
       wheelTarget = closest.section.offsetTop;
       document.documentElement.classList.add('is-wheel-smoothing');
       requestWheelMotion();
@@ -205,18 +206,24 @@ if (!reducedMotion && finePointer) {
     if (window.innerWidth <= 900 || event.ctrlKey || event.metaKey) return;
     event.preventDefault();
     const unit = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? window.innerHeight : 1;
-    const delta = clamp(event.deltaY * unit, -320, 320);
+    const delta = clamp(event.deltaY * unit, -360, 360);
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    wheelTarget = clamp(wheelTarget + delta, 0, max);
+    wheelVelocity = wheelVelocity * .38 + delta * .34;
+    const inertialDistance = delta * 1.34 + wheelVelocity * 1.8;
+    wheelTarget = clamp(wheelTarget + inertialDistance, 0, max);
     document.documentElement.classList.add('is-wheel-smoothing');
     requestWheelMotion();
     window.clearTimeout(wheelSettleTimer);
-    wheelSettleTimer = window.setTimeout(settleToNearbySection, 180);
+    wheelSettleTimer = window.setTimeout(() => {
+      wheelVelocity = 0;
+      settleToNearbySection();
+    }, 260);
   }, { passive:false });
 
   window.addEventListener('pointerdown', () => {
     if (wheelFrame) window.cancelAnimationFrame(wheelFrame);
     wheelFrame = 0;
+    wheelVelocity = 0;
     wheelTarget = window.scrollY;
     document.documentElement.classList.remove('is-wheel-smoothing');
   }, { passive:true });
