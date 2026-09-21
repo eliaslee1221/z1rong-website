@@ -460,7 +460,9 @@ html, body { background:var(--paper); }
 .site-header::after, .brand, .header-side { opacity:0; }
 .desktop-nav { bottom:.85rem; z-index:190; min-width:26.7rem; justify-content:space-between; gap:0; padding:.18rem .25rem; border:1px solid #454545; border-radius:999px; background:#151515; box-shadow:0 .45rem 1.4rem rgba(0,0,0,.12); pointer-events:auto; }
 .desktop-nav a { padding:.58rem .72rem; font:500 .5rem/1 var(--sans); text-transform:none; }
-.desktop-nav a:first-child { padding-inline:.45rem; font-size:.8rem; }
+.desktop-nav a:first-child { padding-inline:.65rem; font-size:.8rem; }
+.desktop-nav .nav-brand { display:flex; align-items:center; gap:.12rem; color:#f4f4f4; font-family:var(--display); font-weight:600; letter-spacing:-.055em; }
+.desktop-nav .nav-brand i { color:var(--orange); font-size:.72em; font-style:normal; }
 .desktop-nav a:last-child { padding:.62rem 1rem; background:var(--orange); }
 .desktop-nav a::after { display:none; }
 .nav-blur { height:5.5rem; backdrop-filter:blur(16px); mask-image:linear-gradient(to top,rgba(0,0,0,.82),transparent 82%); }
