@@ -8,6 +8,7 @@ const progress = document.querySelector('[data-progress]');
 const pinnedCard = document.querySelector('.hero-portrait');
 const pinnedCardInner = pinnedCard?.querySelector('.scroll-card');
 const aboutSection = document.querySelector('#about');
+const metricsTicker = document.querySelector('.metrics-ticker');
 const abilityCards = [...document.querySelectorAll('.ability')];
 const desktopNav = document.querySelector('.desktop-nav');
 const navIndicator = desktopNav?.querySelector('.nav-indicator');
@@ -122,8 +123,10 @@ const updatePinnedCard = (current) => {
   if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
   const aboutBottom = aboutTop + (aboutSection?.offsetHeight || window.innerHeight);
-  const fadeStart = aboutTop + (aboutBottom - aboutTop) * .34;
-  const fadeEnd = aboutBottom - Math.min(window.innerHeight * .08, (aboutBottom - aboutTop) * .1);
+  const tickerTop = metricsTicker?.offsetTop || aboutBottom;
+  const tickerHeight = metricsTicker?.offsetHeight || 0;
+  const fadeStart = Math.max(aboutBottom, tickerTop + tickerHeight * .08);
+  const fadeEnd = Math.max(fadeStart + 1, tickerTop + tickerHeight + window.innerHeight * .08);
   const departure = clamp((current - fadeStart) / Math.max(1, fadeEnd - fadeStart));
   const departureScale = mix(1, .64, departure);
   pinnedCard.style.opacity = String(1 - departure);
@@ -138,7 +141,6 @@ const renderScrollMotion = () => {
   const easing = reducedMotion ? 1 : .1;
   visualScroll += (targetScroll - visualScroll) * easing;
   if (Math.abs(targetScroll - visualScroll) < .12) visualScroll = targetScroll;
-  updatePinnedCard(visualScroll);
   updateNavIndicator(visualScroll);
   if (visualScroll !== targetScroll) scrollFrame = window.requestAnimationFrame(renderScrollMotion);
   else scrollFrame = 0;
@@ -152,6 +154,7 @@ const handleScroll = () => {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   targetScroll = current;
   progress.style.transform = `scaleX(${max > 0 ? current / max : 0})`;
+  updatePinnedCard(current);
   updateAbilityStack();
   requestScrollMotion();
   lastScroll = current;
