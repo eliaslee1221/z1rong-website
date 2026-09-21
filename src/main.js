@@ -3,14 +3,16 @@ import './style.css';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 const body = document.body;
-const header = document.querySelector('[data-header]');
 const loader = document.querySelector('[data-loader]');
-const menuButton = document.querySelector('.menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
 const progress = document.querySelector('[data-progress]');
 const pinnedCard = document.querySelector('.hero-portrait');
 const pinnedCardInner = pinnedCard?.querySelector('.scroll-card');
 const aboutSection = document.querySelector('#about');
+const abilityCards = [...document.querySelectorAll('.ability')];
+const desktopNav = document.querySelector('.desktop-nav');
+const navIndicator = desktopNav?.querySelector('.nav-indicator');
+const navLinks = [...(desktopNav?.querySelectorAll('a[href^="#"]') || [])];
+const navSections = navLinks.map((link) => document.querySelector(link.hash));
 
 body.classList.add('is-loading');
 
@@ -51,19 +53,49 @@ else {
 }
 window.setTimeout(finishLoading, 3200);
 
-function setMenu(open) {
-  body.classList.toggle('menu-open', open);
-  menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.querySelector('span').textContent = open ? 'CLOSE' : 'MENU';
-}
-
-menuButton.addEventListener('click', () => setMenu(!body.classList.contains('menu-open')));
-mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
-
 let lastScroll = window.scrollY;
 const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 const mix = (from, to, amount) => from + (to - from) * clamp(amount);
+
+const positionNavIndicator = (left, width, activeLink) => {
+  if (!desktopNav || !navIndicator || !activeLink) return;
+  navLinks.forEach((link) => link.classList.toggle('is-active', link === activeLink));
+  navIndicator.style.width = `${width}px`;
+  navIndicator.style.transform = `translate3d(${left}px,0,0)`;
+};
+
+const updateNavIndicator = (current) => {
+  let activeIndex = 0;
+  navSections.forEach((section, index) => { if (section && section.offsetTop <= current + 2) activeIndex = index; });
+  const currentLink = navLinks[activeIndex];
+  const nextLink = navLinks[activeIndex + 1];
+  const currentSection = navSections[activeIndex];
+  const nextSection = navSections[activeIndex + 1];
+  if (!currentLink) return;
+  if (!nextLink || !currentSection || !nextSection) {
+    positionNavIndicator(currentLink.offsetLeft, currentLink.offsetWidth, currentLink);
+    return;
+  }
+  const progress = clamp((current - currentSection.offsetTop) / Math.max(1, nextSection.offsetTop - currentSection.offsetTop));
+  const left = mix(currentLink.offsetLeft, nextLink.offsetLeft, progress);
+  const width = mix(currentLink.offsetWidth, nextLink.offsetWidth, progress);
+  positionNavIndicator(left, width, progress < .5 ? currentLink : nextLink);
+};
+
+const updateAbilityStack = () => {
+  if (window.innerWidth <= 900) {
+    abilityCards.forEach((card) => card.classList.remove('is-buried'));
+    return;
+  }
+  let activeIndex = -1;
+  abilityCards.forEach((card, index) => {
+    const stickyTop = Number.parseFloat(getComputedStyle(card).top) || 0;
+    if (card.getBoundingClientRect().top <= stickyTop + 2) activeIndex = index;
+  });
+  abilityCards.forEach((card, index) => {
+    card.classList.toggle('is-buried', activeIndex >= 2 && index < activeIndex - 1);
+  });
+};
 
 const updatePinnedCard = (current) => {
   if (!pinnedCard || !pinnedCardInner) return;
@@ -94,19 +126,20 @@ const updatePinnedCard = (current) => {
 const handleScroll = () => {
   const current = window.scrollY;
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  header.classList.toggle('is-scrolled', current > 20);
-  const darkAtTop = [...document.querySelectorAll('.research, .recognition, .testimonials, .contact')].some((section) => {
-    const box = section.getBoundingClientRect();
-    return box.top <= 40 && box.bottom > 40;
-  });
-  header.classList.toggle('on-dark', darkAtTop);
   progress.style.transform = `scaleX(${max > 0 ? current / max : 0})`;
   updatePinnedCard(current);
+  updateNavIndicator(current);
+  updateAbilityStack();
   lastScroll = current;
 };
 window.addEventListener('scroll', handleScroll, { passive: true });
 handleScroll();
-window.addEventListener('resize', () => updatePinnedCard(window.scrollY));
+window.addEventListener('resize', () => {
+  updatePinnedCard(window.scrollY);
+  updateNavIndicator(window.scrollY);
+  updateAbilityStack();
+});
+window.addEventListener('load', () => updateNavIndicator(window.scrollY), { once: true });
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -429,11 +462,6 @@ document.querySelector('.about-actions button')?.addEventListener('click', async
     button.textContent = 'hello@example.com';
   }
 });
-
-const navBlur = document.createElement('div');
-navBlur.className = 'nav-blur';
-navBlur.setAttribute('aria-hidden', 'true');
-document.body.append(navBlur);
 
 document.querySelector('.contact-form')?.addEventListener('submit', (event) => {
   event.preventDefault();
