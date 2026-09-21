@@ -129,8 +129,8 @@ const updatePinnedCard = (current) => {
   if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
   const panelHeight = aboutPanel?.offsetHeight || window.innerHeight;
-  const fadeStart = aboutTop + Math.min(panelHeight * .18, window.innerHeight * .2);
-  const fadeEnd = aboutTop + Math.min(panelHeight * .68, window.innerHeight * .72);
+  const fadeStart = aboutTop + Math.min(panelHeight * .58, window.innerHeight * .62);
+  const fadeEnd = aboutTop + Math.min(panelHeight * .9, window.innerHeight * .94);
   const departure = clamp((current - fadeStart) / Math.max(1, fadeEnd - fadeStart));
   const departureScale = mix(1, .42, departure);
   pinnedCard.style.opacity = String(1 - departure);

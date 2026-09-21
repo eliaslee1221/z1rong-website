@@ -836,7 +836,7 @@ body { font-weight:500; }
 
 /* Integrated light metrics ribbon — no dark separator between sections. */
 .about-anchor { position:relative; background:var(--paper); }
-.metrics-ticker { position:relative; width:min(67rem,calc(100% - 5rem)); margin-inline:auto; color:#a2a2a2; background:var(--paper); border:0; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); }
+.about-anchor .metrics-ticker { position:absolute; top:64%; left:50%; z-index:4; width:min(67rem,calc(100% - 5rem)); margin:0; color:#a2a2a2; background:transparent; border:0; overflow:hidden; transform:translateX(-50%); -webkit-mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); mask-image:linear-gradient(90deg,transparent 0,black 5.5%,black 94.5%,transparent 100%); }
 .metrics-ticker .ticker-track { min-width:max-content; padding-block:3.2rem; justify-content:center; }
 .metrics-ticker span { color:#a2a2a2; font:500 clamp(.68rem,.8vw,.84rem)/1 var(--sans); letter-spacing:-.025em; text-transform:none; }
 .metrics-ticker i { color:#bababa; }
@@ -878,7 +878,7 @@ body { font-weight:500; }
 }
 
 @media (max-width:900px) {
-  .metrics-ticker { width:calc(100% - 1rem); -webkit-mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); }
+  .about-anchor .metrics-ticker { top:72%; width:calc(100% - 1rem); -webkit-mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); }
   .orbital-system { inset:8% -12%; width:124%; height:84%; }
   .orbital-path { stroke-width:.9; }
 }
