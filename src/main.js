@@ -121,8 +121,8 @@ const updatePinnedCard = (current) => {
   else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
   const aboutTop = aboutSection?.offsetTop || end + window.innerHeight;
   const aboutBottom = aboutTop + (aboutSection?.offsetHeight || window.innerHeight);
-  const fadeStart = aboutBottom - window.innerHeight * .18;
-  const fadeEnd = aboutBottom + window.innerHeight * .38;
+  const fadeStart = aboutBottom - window.innerHeight * .03;
+  const fadeEnd = aboutBottom + window.innerHeight * .14;
   pinnedCard.style.opacity = String(1 - clamp((current - fadeStart) / (fadeEnd - fadeStart)));
   pinnedCard.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) rotateZ(${z}deg) scale(${scale})`;
   pinnedCardInner.style.transform = `rotateY(${rotateY}deg)`;
@@ -162,6 +162,66 @@ window.addEventListener('resize', () => {
   updateAbilityStack();
 });
 window.addEventListener('load', () => updateNavIndicator(window.scrollY), { once: true });
+
+if (!reducedMotion && finePointer) {
+  const snapSections = ['#home', '#skills', '#about', '#work', '#testimonials', '#contact']
+    .map((selector) => document.querySelector(selector))
+    .filter(Boolean);
+  let wheelTarget = window.scrollY;
+  let wheelFrame = 0;
+  let wheelSettleTimer = 0;
+
+  const renderWheelMotion = () => {
+    const current = window.scrollY;
+    const next = current + (wheelTarget - current) * .16;
+    window.scrollTo(0, Math.abs(wheelTarget - next) < .35 ? wheelTarget : next);
+    if (Math.abs(wheelTarget - window.scrollY) > .5) wheelFrame = window.requestAnimationFrame(renderWheelMotion);
+    else {
+      wheelFrame = 0;
+      document.documentElement.classList.remove('is-wheel-smoothing');
+    }
+  };
+
+  const requestWheelMotion = () => {
+    if (!wheelFrame) wheelFrame = window.requestAnimationFrame(renderWheelMotion);
+  };
+
+  const settleToNearbySection = () => {
+    const closest = snapSections.reduce((best, section) => {
+      const distance = Math.abs(section.offsetTop - wheelTarget);
+      return !best || distance < best.distance ? { section, distance } : best;
+    }, null);
+    if (closest && closest.distance < window.innerHeight * .24) {
+      wheelTarget = closest.section.offsetTop;
+      document.documentElement.classList.add('is-wheel-smoothing');
+      requestWheelMotion();
+    }
+  };
+
+  window.addEventListener('wheel', (event) => {
+    if (window.innerWidth <= 900 || event.ctrlKey || event.metaKey) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? window.innerHeight : 1;
+    const delta = clamp(event.deltaY * unit, -260, 260);
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    wheelTarget = clamp(wheelTarget + delta, 0, max);
+    document.documentElement.classList.add('is-wheel-smoothing');
+    requestWheelMotion();
+    window.clearTimeout(wheelSettleTimer);
+    wheelSettleTimer = window.setTimeout(settleToNearbySection, 150);
+  }, { passive:false });
+
+  window.addEventListener('pointerdown', () => {
+    if (wheelFrame) window.cancelAnimationFrame(wheelFrame);
+    wheelFrame = 0;
+    wheelTarget = window.scrollY;
+    document.documentElement.classList.remove('is-wheel-smoothing');
+  }, { passive:true });
+
+  window.addEventListener('scroll', () => {
+    if (!wheelFrame) wheelTarget = window.scrollY;
+  }, { passive:true });
+}
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {

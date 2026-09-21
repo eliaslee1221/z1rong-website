@@ -640,6 +640,7 @@ html, body { background:var(--paper); }
 
 /* Scale, depth and fixed-navigation refinements. */
 html { text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+html.is-wheel-smoothing { scroll-behavior:auto!important; }
 body { font-weight:500; }
 .desktop-nav { position:fixed; top:auto; bottom:clamp(.8rem,1.5vh,1.25rem); font-weight:600; transform:translateX(-50%) translateZ(0); }
 .desktop-nav a { font-weight:600; }
@@ -809,5 +810,20 @@ body { font-weight:500; }
   .ability { visibility:visible; transition:rotate .5s cubic-bezier(.16,1,.3,1),opacity .78s cubic-bezier(.16,1,.3,1),filter .78s cubic-bezier(.16,1,.3,1),translate .78s cubic-bezier(.16,1,.3,1),scale .78s cubic-bezier(.16,1,.3,1); }
   .ability.is-under { opacity:.3; filter:saturate(.22); }
   .ability.is-buried { visibility:visible; opacity:0!important; filter:saturate(0); translate:0 -1.2rem; scale:.965; }
+}
+
+/* Compact 70vh hero composition and restrained satellite details. */
+@media (min-width:901px) {
+  .hero { height:70svh; min-height:38rem; }
+  .hero-top { top:clamp(15rem,30vh,20rem); }
+  .hero-title, .hero-portrait { top:clamp(23rem,46vh,30rem); }
+  .hero-math-space { top:46%; }
+  .hero-bottom { top:clamp(29rem,58vh,36rem); }
+
+  .hero-math-space::before { content:''; position:absolute; top:50%; left:50%; width:18%; aspect-ratio:1; border:1px solid rgba(229,129,0,.12); border-radius:50%; background:radial-gradient(circle,rgba(229,129,0,.08),transparent 68%); transform:translate(-50%,-50%); }
+  .hero-math-space i::before { content:''; position:absolute; top:50%; right:-.34rem; width:.62rem; height:.62rem; border:1px solid rgba(48,48,48,.42); border-radius:50%; background:var(--paper); box-shadow:0 0 0 .22rem rgba(238,238,238,.65); transform:translateY(-50%); }
+  .hero-math-space i:nth-child(2)::before { right:-.7rem; width:1.35rem; height:.5rem; border-radius:.1rem; border-color:rgba(229,129,0,.55); background:linear-gradient(90deg,transparent 0 22%,var(--orange) 22% 30%,transparent 30% 70%,var(--orange) 70% 78%,transparent 78%); }
+  .hero-math-space i:nth-child(3)::before { width:.5rem; height:.5rem; border-style:dashed; border-color:rgba(229,129,0,.65); }
+  .hero-math-space i:nth-child(4)::before { width:.42rem; height:.42rem; background:var(--orange); border-color:var(--orange); }
 }
 
