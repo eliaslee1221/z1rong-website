@@ -133,6 +133,82 @@ if (!reducedMotion && finePointer) {
   }, { passive: true });
 }
 
+class HeroModel {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.context = canvas.getContext('2d');
+    this.time = 0;
+    this.pointer = { x: 0, y: 0 };
+    this.resize = this.resize.bind(this);
+    this.draw = this.draw.bind(this);
+    window.addEventListener('resize', this.resize);
+    canvas.closest('.hero-model')?.addEventListener('pointermove', (event) => {
+      const box = canvas.getBoundingClientRect();
+      this.pointer.x = (event.clientX - box.left) / box.width - .5;
+      this.pointer.y = (event.clientY - box.top) / box.height - .5;
+    }, { passive: true });
+    this.resize();
+    this.draw();
+  }
+
+  resize() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
+    this.width = this.canvas.clientWidth;
+    this.height = this.canvas.clientHeight;
+    this.canvas.width = Math.round(this.width * ratio);
+    this.canvas.height = Math.round(this.height * ratio);
+    this.context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  project(x, y, z) {
+    const angle = this.time * .00035 + this.pointer.x * .6;
+    const tilt = -.72 + this.pointer.y * .32;
+    const ca = Math.cos(angle);
+    const sa = Math.sin(angle);
+    const ct = Math.cos(tilt);
+    const st = Math.sin(tilt);
+    const x1 = x * ca + z * sa;
+    const z1 = -x * sa + z * ca;
+    const y1 = y * ct - z1 * st;
+    const depth = y * st + z1 * ct;
+    const perspective = 4.8 / (4.8 - depth);
+    const scale = Math.min(this.width, this.height) * .23;
+    return { x: this.width * .5 + x1 * scale * perspective, y: this.height * .46 - y1 * scale * perspective };
+  }
+
+  curve(fixed, swap) {
+    const points = [];
+    for (let i = 0; i <= 30; i += 1) {
+      const value = -1.8 + (3.6 * i) / 30;
+      const x = swap ? fixed : value;
+      const y = swap ? value : fixed;
+      points.push(this.project(x, y, (x * x - y * y) * .34));
+    }
+    return points;
+  }
+
+  draw(timestamp = 0) {
+    this.time = timestamp;
+    const ctx = this.context;
+    ctx.clearRect(0, 0, this.width, this.height);
+    for (let i = 0; i < 13; i += 1) {
+      const fixed = -1.8 + (3.6 * i) / 12;
+      [[false, 'rgba(239,135,0,.62)'], [true, 'rgba(239,239,239,.28)']].forEach(([swap, color]) => {
+        const points = this.curve(fixed, swap);
+        ctx.beginPath();
+        points.forEach((point, index) => index ? ctx.lineTo(point.x, point.y) : ctx.moveTo(point.x, point.y));
+        ctx.strokeStyle = color;
+        ctx.lineWidth = Math.abs(fixed) < .01 ? 1.35 : .7;
+        ctx.stroke();
+      });
+    }
+    if (!reducedMotion) requestAnimationFrame(this.draw);
+  }
+}
+
+const heroModelCanvas = document.querySelector('#hero-model-canvas');
+if (heroModelCanvas) new HeroModel(heroModelCanvas);
+
 class SaddleSurface {
   constructor(canvas) {
     this.canvas = canvas;
@@ -289,6 +365,15 @@ class SaddleSurface {
 
 const saddleCanvas = document.querySelector('#saddle-canvas');
 if (saddleCanvas) new SaddleSurface(saddleCanvas);
+
+document.querySelectorAll('.faq-list details').forEach((details) => {
+  details.addEventListener('toggle', () => {
+    if (!details.open) return;
+    document.querySelectorAll('.faq-list details[open]').forEach((other) => {
+      if (other !== details) other.open = false;
+    });
+  });
+});
 
 document.querySelectorAll('a, button, .ability').forEach((element) => {
   element.addEventListener('pointerdown', () => element.classList.add('is-pressed'));
