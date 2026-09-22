@@ -86,8 +86,7 @@ const updateNavIndicator = (current) => {
 };
 
 const updateAbilityStack = () => {
-  const portraitTabletStack = window.matchMedia('(min-width:601px) and (max-width:900px) and (orientation:portrait)').matches;
-  if (window.innerWidth <= 900 && !portraitTabletStack) {
+  if (window.innerWidth <= 900) {
     abilityCards.forEach((card) => card.classList.remove('is-buried', 'is-under'));
     return;
   }

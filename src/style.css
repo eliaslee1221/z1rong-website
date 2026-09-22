@@ -983,40 +983,37 @@ body { font-weight:500; }
   .about-anchor .metrics-ticker { top:69%; }
 }
 
-/* Portrait tablets have enough width for the same paper-stack interaction
-   used on desktop, while phones keep the simpler vertical card list. */
+/* Portrait tablets use their available width as a compact two-column grid;
+   desktop keeps the paper stack and phones keep the single-column list. */
 @media (min-width:601px) and (max-width:900px) and (orientation:portrait) {
-  .profile .section-intro { width:50%; }
-  .ability-list { width:min(29rem,44vw); padding-bottom:22vh; }
-  .ability {
-    --stack-top:7rem;
-    position:sticky;
-    top:calc(var(--stack-top) + (var(--stack-index,0) * .75rem));
-    z-index:var(--stack-index,1);
-    min-height:clamp(21rem,48vh,27rem);
-    margin-bottom:clamp(8rem,20vh,13rem);
-    padding:2.8rem;
-    border:1px solid rgba(48,48,48,.08);
-    border-radius:1.65rem;
-    box-shadow:none;
-    rotate:var(--card-tilt,0deg);
-    transform-origin:50% 8%;
-    transition:rotate .5s cubic-bezier(.16,1,.3,1),opacity .78s cubic-bezier(.16,1,.3,1),filter .78s cubic-bezier(.16,1,.3,1),translate .78s cubic-bezier(.16,1,.3,1),scale .78s cubic-bezier(.16,1,.3,1);
+  .profile .section-intro { width:100%; }
+  .ability-list {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:1rem;
+    width:100%;
+    padding-bottom:0;
   }
-  .ability:nth-child(1) { --stack-index:1; --card-tilt:-1.35deg; }
-  .ability:nth-child(2) { --stack-index:2; --card-tilt:1.15deg; }
-  .ability:nth-child(3) { --stack-index:3; --card-tilt:-1.05deg; }
-  .ability:nth-child(4) { --stack-index:4; --card-tilt:1.25deg; }
-  .ability:nth-child(5) { --stack-index:5; --card-tilt:-1.15deg; }
-  .ability:nth-child(6) { --stack-index:6; --card-tilt:.95deg; }
-  .ability:nth-child(7) { --stack-index:7; --card-tilt:-1.25deg; }
-  .ability:nth-child(8) { --stack-index:8; --card-tilt:1.1deg; }
-  .ability::before { margin-bottom:1.7rem; font-size:.74rem; font-weight:600; }
-  .ability > span { font-size:1.75rem; font-weight:600; }
-  .ability h3 { font-size:1.8rem; font-weight:600; letter-spacing:-.04em; }
-  .ability p { display:block; margin-top:2.1rem; font-size:.83rem; font-weight:500; line-height:1.65; }
-  .ability.is-under { opacity:.3; filter:saturate(.22); }
-  .ability.is-buried { visibility:visible; opacity:0!important; filter:saturate(0); translate:0 -1.2rem; scale:.965; pointer-events:none; }
-  .ability:hover, .ability:focus-visible { padding:2.8rem; rotate:0deg; }
+  .ability {
+    position:relative;
+    top:auto;
+    z-index:auto;
+    min-height:18rem;
+    margin:0;
+    padding:2rem;
+    border:1px solid rgba(48,48,48,.08);
+    border-radius:1.35rem;
+    rotate:0deg;
+    opacity:1;
+    visibility:visible;
+    filter:none;
+    translate:none;
+    scale:1;
+  }
+  .ability::before { margin-bottom:1.35rem; font-size:.68rem; font-weight:600; }
+  .ability > span { font-size:1.5rem; font-weight:600; }
+  .ability h3 { font-size:1.5rem; font-weight:600; letter-spacing:-.04em; }
+  .ability p { display:block; margin-top:1.7rem; font-size:.76rem; font-weight:500; line-height:1.6; }
+  .ability:hover, .ability:focus-visible { padding:2rem; rotate:0deg; }
 }
 
