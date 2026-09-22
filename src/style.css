@@ -962,3 +962,12 @@ body { font-weight:500; }
   .desktop-nav .nav-brand { padding-inline:.75rem; }
 }
 
+/* Touch tablets retain the desktop two-column About composition, but the
+   metrics ribbon belongs to the left copy column and must clear the card. */
+@media (min-width:901px) and (max-width:1366px) and (hover:none) and (pointer:coarse) {
+  .about-anchor .metrics-ticker {
+    left:25%;
+    width:min(31rem,calc(50% - 5rem));
+  }
+}
+
