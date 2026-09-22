@@ -1,4 +1,6 @@
 import './style.css';
+const scrollStatement = document.querySelector('[data-scroll-type]');
+const scrollStatementText = document.querySelector('[data-scroll-type-text]');
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
@@ -583,3 +585,35 @@ document.querySelectorAll('a, button, .ability').forEach((element) => {
   ['pointerup', 'pointercancel', 'pointerleave'].forEach((type) => element.addEventListener(type, () => element.classList.remove('is-pressed')));
 });
 
+
+
+let scrollStatementChars = [];
+if (scrollStatementText) {
+  const statement = scrollStatementText.textContent.trim();
+  scrollStatementText.setAttribute('aria-label', statement);
+  scrollStatementText.textContent = '';
+  scrollStatementChars = [...statement].map((character) => {
+    const glyph = document.createElement('span');
+    glyph.className = 'scroll-statement-char';
+    glyph.setAttribute('aria-hidden', 'true');
+    glyph.textContent = character;
+    scrollStatementText.append(glyph);
+    return glyph;
+  });
+}
+
+const updateScrollStatement = () => {
+  if (!scrollStatement || !scrollStatementChars.length) return;
+  const box = scrollStatement.getBoundingClientRect();
+  const start = window.innerHeight * .9;
+  const end = window.innerHeight * -.28;
+  const amount = reducedMotion ? 1 : clamp((start - box.top) / (start - end));
+  const visibleCharacters = Math.round(scrollStatementChars.length * amount);
+  scrollStatementChars.forEach((character, index) => {
+    character.classList.toggle('is-typed', index < visibleCharacters);
+  });
+};
+
+window.addEventListener('scroll', updateScrollStatement, { passive:true });
+window.addEventListener('resize', updateScrollStatement);
+updateScrollStatement();
