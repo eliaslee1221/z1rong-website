@@ -914,7 +914,7 @@ body { font-weight:500; }
   .about-anchor .metrics-ticker { position:relative; top:auto; left:auto; width:calc(100% - 1rem); margin:0 auto; transform:none; }
   .metrics-ticker .ticker-track { padding-block:1.35rem; }
 
-  .research-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .research-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
   .research-card, .research-card--wide { min-height:20rem; }
   .inquiry { grid-template-columns:1fr; }
   .inquiry::after { grid-column:1; grid-row:auto; min-height:20rem; }
