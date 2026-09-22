@@ -888,3 +888,77 @@ body { font-weight:500; }
   .orbital-node { animation:none; opacity:.7; }
 }
 
+/* Final responsive pass: keep the editorial composition intact without
+   inheriting desktop positioning on tablets and phones. */
+@media (max-width:900px) {
+  html { scroll-padding-bottom:5rem; }
+  body { overflow-x:clip; }
+  #main-content { position:relative; width:100%; max-width:100%; overflow:clip; }
+
+  .hero { min-height:max(42rem,100svh); overflow:hidden; }
+  .hero-title { left:50%; width:calc(100% - 2rem); transform:translate(-50%,-50%); }
+  .hero-portrait { position:absolute; left:50%; z-index:20; }
+  .hero-math-space { width:112vw; max-width:none; }
+  .orbital-system { inset:8% -6%; width:112%; height:84%; }
+
+  .profile, .about, .recognition, .timeline, .testimonials, .faq, .inquiry,
+  .research-inner, .contact-top, .contact footer { width:min(44rem,calc(100% - 2rem)); }
+  .section-pad { padding-block:clamp(5rem,10vw,7rem); }
+
+  .ability-list { width:min(32rem,100%); }
+  .ability { min-height:16rem; }
+
+  .about { grid-template-columns:1fr; gap:3rem; min-height:auto; padding-block:clamp(6rem,12vw,9rem); }
+  .about-visual { width:min(28rem,78vw); margin-inline:auto; }
+  .about-content { width:min(32rem,100%); }
+  .about-anchor .metrics-ticker { position:relative; top:auto; left:auto; width:calc(100% - 1rem); margin:0 auto; transform:none; }
+  .metrics-ticker .ticker-track { padding-block:1.35rem; }
+
+  .research-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .research-card, .research-card--wide { min-height:20rem; }
+  .inquiry { grid-template-columns:1fr; }
+  .inquiry::after { grid-column:1; grid-row:auto; min-height:20rem; }
+
+  .desktop-nav { width:calc(100% - 1rem); max-width:42rem; min-width:0; }
+  .desktop-nav a { flex:0 0 auto; }
+}
+
+@media (max-width:600px) {
+  .hero { min-height:max(38rem,100svh); }
+  .hero-top { top:3.75rem; width:calc(100% - 2rem); justify-content:space-between; }
+  .hero-top span:first-child, .hero-top span:last-child { position:static; display:block; max-width:42%; text-align:inherit; }
+  .hero-top span:last-child { text-align:right; }
+  .hero-title { top:10.25rem; grid-template-columns:minmax(0,1fr) minmax(6rem,28vw) minmax(0,1fr); gap:.35rem; }
+  .hero-line { font-size:10vw; white-space:nowrap; }
+  .hero-portrait { top:12.75rem; width:min(6.5rem,27vw); height:min(9.1rem,38vw); }
+  .hero-math-space { top:12rem; width:116vw; height:22rem; }
+  .orbital-system { inset:9% -8%; width:116%; height:82%; }
+  .hero-bottom { top:18rem; right:1rem; }
+
+  .section-pad { padding-block:4.5rem; }
+  .section-intro h2, .recognition-head h2, .research-head h2, .timeline-head h2,
+  .testimonials-head h2, .faq-head h2, .inquiry-head h2 { font-size:clamp(1.75rem,9vw,2.45rem); overflow-wrap:anywhere; }
+  .intro-copy, .recognition-intro, .research-head > p:last-child { width:100%; }
+
+  .ability { min-height:13rem; padding:1.5rem; }
+  .ability:hover, .ability:focus { padding:1.5rem; }
+  .ability h3 { font-size:1.2rem; }
+
+  .about { gap:2.5rem; padding-block:5rem 4rem; }
+  .about-visual { width:min(22rem,100%); }
+  .about-content h2 { font-size:clamp(2.5rem,13vw,3.6rem); }
+  .about-actions { gap:.45rem; }
+  .about-actions a, .about-actions button { padding:.72rem .78rem; }
+  .about-anchor .metrics-ticker { width:calc(100% - .5rem); }
+
+  .research-grid { grid-template-columns:1fr; }
+  .research-card, .research-card--wide { min-height:18rem; }
+  .award-card { grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr); gap:.6rem; }
+  .timeline-list article { grid-template-columns:minmax(4.5rem,.8fr) minmax(0,1.5fr); }
+
+  .desktop-nav { justify-content:flex-start; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; }
+  .desktop-nav::-webkit-scrollbar { display:none; }
+  .desktop-nav a { padding:.72rem .58rem; }
+  .desktop-nav .nav-brand { padding-inline:.75rem; }
+}
+
