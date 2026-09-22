@@ -119,7 +119,11 @@ const updatePinnedCard = (current) => {
   const contentDocumentTop = contentRect ? contentRect.top + window.scrollY : aboutTop + window.innerHeight * .3;
   const targetCenterY = clamp(contentDocumentTop - aboutTop + (contentRect?.height || 0) * .5, window.innerHeight * .34, window.innerHeight * .54);
   const x = mix(0, targetCenterX - window.innerWidth * .5, p / .22);
-  const y = mix(0, targetCenterY - baseTop, p / .22);
+  // Once About reaches the viewport anchor, keep the card attached to that
+  // section in document space instead of letting the fixed card follow the
+  // viewer into the following sections.
+  const dockOffset = Math.max(0, current - aboutTop);
+  const y = mix(0, targetCenterY - baseTop, p / .22) - dockOffset;
   const z = p < .2 ? mix(0, 8, p / .2) : mix(8, 0, (p - .2) / .25);
   let rotateY = 0;
   if (p >= .2 && p < .45) rotateY = mix(0, 180, (p - .2) / .25);
