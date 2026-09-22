@@ -1017,3 +1017,58 @@ body { font-weight:500; }
   .ability:hover, .ability:focus-visible { padding:2rem; rotate:0deg; }
 }
 
+
+
+/* Scroll-driven statement between About and Awards. */
+.scroll-statement {
+  position:relative;
+  min-height:135svh;
+  padding:0;
+  background:var(--paper);
+}
+.scroll-statement-inner {
+  position:sticky;
+  top:22svh;
+  width:min(67rem,calc(100% - 5rem));
+  margin-inline:auto;
+  padding-block:clamp(3rem,6vh,5rem);
+}
+.scroll-statement-copy {
+  width:min(50rem,76%);
+  margin:0 auto;
+  color:#b9b9b9;
+  font:500 clamp(1.7rem,1.65vw,2.45rem)/1.18 var(--display);
+  letter-spacing:0;
+  white-space:break-spaces;
+}
+.scroll-statement-char {
+  color:#b9b9b9;
+  transition:color .18s linear;
+}
+.scroll-statement-char.is-typed { color:var(--ink); }
+
+@media (max-width:900px) {
+  .scroll-statement { min-height:120svh; padding:0; }
+  .scroll-statement-inner { top:18svh; width:min(44rem,calc(100% - 2rem)); padding-block:3rem; }
+  .scroll-statement-copy { width:min(34rem,88%); font-size:clamp(1.65rem,4.4vw,2.25rem); }
+}
+
+@media (max-width:600px) {
+  .scroll-statement { min-height:115svh; padding:0; }
+  .scroll-statement-inner { top:14svh; padding-block:2.5rem; }
+  .scroll-statement-copy { width:100%; font-size:clamp(1.5rem,7.2vw,2rem); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .scroll-statement-char { color:var(--ink); transition:none; }
+}
+
+/* Keep the About metrics ribbon centred within the left content column. */
+@media (min-width:901px) {
+  .about-anchor .metrics-ticker {
+    right:50%;
+    left:auto;
+    width:min(33.5rem,calc(50% - 2.5rem));
+    transform:none;
+  }
+}
