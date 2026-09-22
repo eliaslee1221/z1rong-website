@@ -971,3 +971,15 @@ body { font-weight:500; }
   }
 }
 
+/* Keep the hero composition centred on phones and portrait tablets,
+   including larger iPads whose CSS viewport exceeds the 900px breakpoint. */
+@media (max-width:1366px) and (orientation:portrait) and (hover:none) and (pointer:coarse) {
+  #main-content { width:100%; max-width:100%; overflow:clip; }
+  .hero-title { right:auto; left:50%; transform:translate(-50%,-50%); }
+  .hero-portrait { left:50%; }
+}
+
+@media (min-width:901px) and (max-width:1366px) and (orientation:landscape) and (hover:none) and (pointer:coarse) {
+  .about-anchor .metrics-ticker { top:69%; }
+}
+
