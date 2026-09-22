@@ -985,7 +985,7 @@ body { font-weight:500; }
 
 /* Portrait tablets have enough width for the same paper-stack interaction
    used on desktop, while phones keep the simpler vertical card list. */
-@media (min-width:601px) and (max-width:900px) and (orientation:portrait) and (hover:none) and (pointer:coarse) {
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait) {
   .profile .section-intro { width:50%; }
   .ability-list { width:min(29rem,44vw); padding-bottom:22vh; }
   .ability {
