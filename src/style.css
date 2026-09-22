@@ -924,7 +924,7 @@ body { font-weight:500; }
 }
 
 @media (max-width:600px) {
-  .hero { min-height:max(38rem,100svh); }
+  .hero { min-height:clamp(34rem,78svh,42rem); }
   .hero-top { top:3.75rem; width:calc(100% - 2rem); justify-content:space-between; }
   .hero-top span:first-child, .hero-top span:last-child { position:static; display:block; max-width:42%; text-align:inherit; }
   .hero-top span:last-child { text-align:right; }
