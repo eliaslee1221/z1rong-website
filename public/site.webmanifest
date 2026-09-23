@@ -1,7 +1,7 @@
 {
-  "name": "Creative Portfolio Template",
-  "short_name": "Portfolio",
-  "description": "A complete editorial creative portfolio template.",
+  "name": "Tzu-Jung Li — Research Portfolio",
+  "short_name": "Tzu-Jung Li",
+  "description": "Mathematics, algorithms, artificial intelligence and networked systems research portfolio.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#eeeee8",

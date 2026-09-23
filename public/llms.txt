@@ -1,18 +1,27 @@
-# Creative Portfolio Template
+# Tzu-Jung Li — Research Portfolio
 
-> An editorial portfolio template awaiting final personal content.
+> The public research portfolio of Tzu-Jung Li (李子榕), examining how intelligent networked systems make inference decisions under communication, computation, energy, memory and thermal constraints.
 
 Canonical URL: https://z1ron.com/
 Language: Traditional Chinese (zh-Hant)
 
-## Current status
+## Profile
 
-The site currently contains labeled placeholder copy and original geometric media. Personal information will be added in a later revision.
+- Mathematics graduate with a double major in Computer Science and Information Engineering at National Chung Cheng University.
+- Research Assistant at Academia Sinica since March 2026.
+- IEEE GLOBECOM 2026 accepted paper, second author.
+- First-author research on thermal-aware satellite AI inference.
 
-## Primary sections
+## Research narrative
 
-- Skills: https://z1ron.com/#skills
-- Selected work: https://z1ron.com/#work
-- Experience: https://z1ron.com/#career
+- Research focus: https://z1ron.com/#skills
+- Research profile: https://z1ron.com/#about
+- Research path: https://z1ron.com/#journey
+- Selected research: https://z1ron.com/#work
+- Research approach: https://z1ron.com/#career
 - Contact: https://z1ron.com/#contact
+
+## Contact
+
+- Email: andky32199@gmail.com
 
