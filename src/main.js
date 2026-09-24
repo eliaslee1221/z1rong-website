@@ -9,9 +9,11 @@ const loader = document.querySelector('[data-loader]');
 const progress = document.querySelector('[data-progress]');
 const pinnedCard = document.querySelector('.hero-portrait');
 const pinnedCardInner = pinnedCard?.querySelector('.scroll-card');
+const cardBackItems = [...(pinnedCard?.querySelectorAll('.card-back-list li') || [])];
 const aboutSection = document.querySelector('#about');
 const aboutPanel = aboutSection?.querySelector('.about');
 const aboutContent = aboutSection?.querySelector('.about-content');
+const skillsSection = document.querySelector('#skills');
 const abilityCards = [...document.querySelectorAll('.ability')];
 const desktopNav = document.querySelector('.desktop-nav');
 const navIndicator = desktopNav?.querySelector('.nav-indicator');
@@ -87,6 +89,14 @@ const updateNavIndicator = (current) => {
   positionNavIndicator(left, width, progress < .5 ? currentLink : nextLink);
 };
 
+let activeBackCard = 0;
+const updateCardBack = (index) => {
+  const card = abilityCards[index];
+  if (!card || !cardBackItems.length || index === activeBackCard) return;
+  activeBackCard = index;
+  cardBackItems.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
+};
+
 const updateAbilityStack = () => {
   if (window.innerWidth <= 900) {
     abilityCards.forEach((card) => card.classList.remove('is-buried', 'is-under'));
@@ -97,6 +107,7 @@ const updateAbilityStack = () => {
     const stickyTop = Number.parseFloat(getComputedStyle(card).top) || 0;
     if (card.getBoundingClientRect().top <= stickyTop + 2) activeIndex = index;
   });
+  updateCardBack(Math.max(0, activeIndex));
   abilityCards.forEach((card, index) => {
     card.classList.toggle('is-buried', activeIndex >= 2 && index < activeIndex - 1);
     card.classList.toggle('is-under', activeIndex >= 1 && index === activeIndex - 1);
@@ -112,6 +123,7 @@ const updatePinnedCard = (current) => {
     return;
   }
   const aboutTop = aboutSection?.offsetTop || 5200;
+  const skillsTop = skillsSection?.offsetTop || window.innerHeight;
   const arrivalEnd = Math.max(window.innerHeight * 2.8, aboutTop - window.innerHeight * .18);
   const p = clamp(current / arrivalEnd);
   const aboutRect = aboutPanel?.getBoundingClientRect();
@@ -131,9 +143,12 @@ const updatePinnedCard = (current) => {
   if (p >= .2 && p < .45) rotateY = mix(0, 180, (p - .2) / .25);
   else if (p >= .45 && p < .8) rotateY = 180;
   else if (p >= .8) rotateY = mix(180, 360, (p - .8) / .2);
-  let scale = 1;
-  if (p >= .45 && p < .65) scale = mix(1, 1.18, (p - .45) / .2);
-  else if (p >= .65 && p < .8) scale = mix(1.18, 1, (p - .65) / .15);
+  const researchEnterProgress = clamp((current - (skillsTop - window.innerHeight * .35)) / (window.innerHeight * .55));
+  const researchEnter = researchEnterProgress * researchEnterProgress * (3 - 2 * researchEnterProgress);
+  const researchExitProgress = clamp((current - (aboutTop - window.innerHeight * 1.05)) / (window.innerHeight * .65));
+  const researchExit = researchExitProgress * researchExitProgress * (3 - 2 * researchExitProgress);
+  const scale = mix(mix(1, 1.2, researchEnter), 1, researchExit);
+  pinnedCard.classList.toggle('is-research-active', researchEnter > .08 && researchExit < .94);
   const panelHeight = aboutPanel?.offsetHeight || window.innerHeight;
   const fadeStart = aboutTop + Math.min(panelHeight * .58, window.innerHeight * .62);
   const fadeEnd = aboutTop + Math.min(panelHeight * .9, window.innerHeight * .94);
