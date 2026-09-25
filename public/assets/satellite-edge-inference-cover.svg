@@ -25,16 +25,6 @@
     <path d="M256 350 739 275" stroke="#35332f" stroke-opacity=".28" stroke-width="2" stroke-dasharray="7 11"/>
     <path d="M535 522 667 755" stroke="#db8b28" stroke-width="2.5" stroke-dasharray="6 9"/>
   </g>
-  <g opacity=".72" fill="none" stroke="#dfad6c" stroke-width="1.5">
-    <circle cx="739" cy="275" r="102"/><circle cx="739" cy="275" r="139" stroke-opacity=".5"/>
-    <path d="M638 275h202M739 174v202" stroke-opacity=".35"/>
-  </g>
-  <g fill="#fffaf0" stroke="#dcb27c" stroke-width="2">
-    <rect x="417" y="394" width="39" height="39" rx="5"/>
-    <rect x="470" y="394" width="39" height="39" rx="5"/>
-    <rect x="523" y="394" width="39" height="39" rx="5"/>
-  </g>
-  <path d="M436 433v30l99 59M490 433v40l45 49M542 433v47l-7 42" fill="none" stroke="#b9a991" stroke-width="2" stroke-dasharray="4 7"/>
   <g class="satellite-static">
     <g transform="translate(256 350)"><use href="#satellite"/></g>
     <g transform="translate(535 522)"><use href="#satellite"/></g>
