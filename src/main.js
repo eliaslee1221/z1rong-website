@@ -1,4 +1,5 @@
 import './style.css';
+import { getSatelliteFrame } from './satelliteMotion.js';
 const scrollStatement = document.querySelector('[data-scroll-type]');
 const scrollStatementText = document.querySelector('[data-scroll-type-text]');
 
@@ -14,7 +15,103 @@ const aboutSection = document.querySelector('#about');
 const aboutPanel = aboutSection?.querySelector('.about');
 const aboutContent = aboutSection?.querySelector('.about-content');
 const skillsSection = document.querySelector('#skills');
+const abilityList = document.querySelector('.ability-list');
 const abilityCards = [...document.querySelectorAll('.ability')];
+const recognitionHeading = document.querySelector('.recognition-head');
+const recognitionRail = document.querySelector('.award-rail');
+const researchHeading = document.querySelector('.research-head');
+const researchLink = document.querySelector('.research-inner .portfolio-link');
+const timelineHeading = document.querySelector('.timeline-head');
+const timelineList = document.querySelector('.timeline-list');
+const cardFront = pinnedCard?.querySelector('.scroll-card-front');
+if (cardFront) {
+  const flow = document.createElement('div');
+  flow.className = 'about-flow';
+  flow.setAttribute('role', 'img');
+  flow.setAttribute('aria-label', '研究流程持續循環：數學建模、系統模型、演算法、程式實作、結果分析。');
+  flow.innerHTML = `
+    <div class="about-flow-head"><span>RESEARCH METHOD / 05 STEPS</span><i aria-hidden="true">✳</i></div>
+    <div class="about-flow-stage" aria-hidden="true">
+      <div class="about-flow-scene" style="--step:0"><span>01 / SINE CURVE</span><svg viewBox="0 0 240 140"><g class="scene-grid"><path d="M18 110 120 128 222 108M18 80l102 18 102-17M18 50l102 19 102-18M18 20l102 19 102-19M18 20v90m51-80v89m51-80v89m51-90v80m51-98v88"/></g><g class="scene-ink"><path d="M20 80h200M120 28v95"/></g><path class="scene-depth" d="M20 89c12 0 16-38 32-38s20 76 38 76 20-76 38-76 20 76 38 76 22-76 38-76 12 38 16 38"/><path class="scene-orange sine-wave" d="M20 80c12 0 16-38 32-38s20 76 38 76 20-76 38-76 20 76 38 76 22-76 38-76 12 38 16 38"/><circle class="scene-point" cx="128" cy="42" r="4"/><text class="scene-formula" x="166" y="30">sin(x)</text></svg></div>
+      <div class="about-flow-scene" style="--step:1"><span>02 / BASE STATION + IOT</span><svg viewBox="0 0 240 140"><path class="network-ground" d="M15 116q105 26 210 0"/><g class="network-social"><path d="M32 101 88 113 152 113 208 101M32 101l120 12"/></g><g class="network-links"><path d="M120 72 32 101m88-29-32 41m32-41 32 41m-32-41 88 29"/></g><g class="network-signals"><circle r="3"><animateMotion path="M32 101 120 72" dur="2.8s" begin="0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.7;1" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle><circle r="3"><animateMotion path="M88 113 120 72" dur="2.8s" begin=".55s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.7;1" dur="2.8s" begin=".55s" repeatCount="indefinite"/></circle><circle r="3"><animateMotion path="M152 113 120 72" dur="2.8s" begin="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.7;1" dur="2.8s" begin="1.1s" repeatCount="indefinite"/></circle><circle r="3"><animateMotion path="M208 101 120 72" dur="2.8s" begin="1.65s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.7;1" dur="2.8s" begin="1.65s" repeatCount="indefinite"/></circle></g><g class="network-waves"><path d="M109 19q-8 8 0 16m-6-22q-14 14 0 28m28-22q8 8 0 16m6-22q14 14 0 28"/></g><g class="network-tower"><circle cx="120" cy="22" r="4"/><path d="m120 29-11 45h22Z"/><path d="M113 52h14m-17 17h20M120 29v45"/><path d="M105 76h30"/></g><g class="network-iot"><circle cx="32" cy="101" r="13"/><rect x="26" y="97" width="12" height="9" rx="2"/><circle cx="32" cy="101" r="1.5"/><circle cx="88" cy="113" r="13"/><rect x="82" y="109" width="12" height="9" rx="2"/><circle cx="88" cy="113" r="1.5"/><circle cx="152" cy="113" r="13"/><rect x="146" y="109" width="12" height="9" rx="2"/><circle cx="152" cy="113" r="1.5"/><circle cx="208" cy="101" r="13"/><rect x="202" y="97" width="12" height="9" rx="2"/><circle cx="208" cy="101" r="1.5"/></g></svg></div>
+      <div class="about-flow-scene" style="--step:2"><span>03 / DECISION FLOW</span><svg viewBox="0 0 240 140"><g class="scene-depth"><rect x="17" y="50" width="42" height="30" rx="5"/><path d="m119 34 34 34-34 34-34-34Z"/><rect x="181" y="26" width="40" height="25" rx="5"/><rect x="181" y="85" width="40" height="25" rx="5"/></g><g class="scene-ink"><rect x="13" y="45" width="42" height="30" rx="5"/><path d="m115 29 34 34-34 34-34-34Z"/><rect x="177" y="21" width="40" height="25" rx="5"/><rect x="177" y="80" width="40" height="25" rx="5"/><path d="M55 60h26m68 3 28-29m-28 29 28 29M33 45V26h82v3M33 75v43h164v-13"/></g><g class="scene-orange"><path d="M55 60h26m68 3 28-29"/><path d="m73 54 8 6-8 6m96-38 8 6-8 6"/></g><circle class="scene-point" cx="115" cy="63" r="4"/></svg></div>
+      <div class="about-flow-scene" style="--step:3"><span>04 / CODE IN MOTION</span><div class="code-typing"><div class="code-lines" data-code-lines><div class="code-line"><span class="code-prefix">&#92;begin</span><span class="code-brace">{</span><span class="code-word">algo</span><span class="code-brace">}</span></div><div class="code-line"><span class="code-prefix">&#92;begin</span><span class="code-brace">{</span><span class="code-word">model</span><span class="code-brace">}</span></div><div class="code-line"><span class="code-prefix">&#92;begin</span><span class="code-brace">{</span><span class="code-word">result</span><span class="code-brace">}</span></div></div></div></div>
+      <div class="about-flow-scene" style="--step:4"><span>05 / EVIDENCE &amp; RESULT</span><svg viewBox="0 0 240 140"><g class="scene-grid"><path d="M24 112h194M24 86h194M24 60h194M24 34h194M24 34v78m48-78v78m48-78v78m48-78v78m50-78v78"/></g><g class="scene-ink"><path d="M24 20v96h202m-10-5 10 5-10 5"/></g><path class="result-line-slow" d="M32 105 60 103 88 101 116 97 144 95 172 90 202 86"/><path class="result-line-fast" d="M32 105 60 100 88 92 116 82 144 65 172 49 202 23"/><circle class="scene-point" cx="202" cy="23" r="4"/><circle class="result-end-slow" cx="202" cy="86" r="3"/></svg></div>
+    </div>
+    <ol class="about-flow-list">
+      <li style="--step:0"><span>01</span><b>MATH</b></li>
+      <li style="--step:1"><span>02</span><b>SYSTEM MODEL</b></li>
+      <li style="--step:2"><span>03</span><b>ALGORITHM</b></li>
+      <li style="--step:3"><span>04</span><b>CODING</b></li>
+      <li style="--step:4"><span>05</span><b>RESULT</b></li>
+    </ol>
+    <div class="about-flow-end"><span></span><span>MODEL → EVIDENCE</span></div>`;
+  const scenes = [...flow.querySelectorAll('.about-flow-scene')];
+  flow.querySelectorAll('.about-flow-list li').forEach((item, index) => {
+    scenes[index].setAttribute('aria-hidden', 'true');
+    item.append(scenes[index]);
+  });
+  flow.querySelector('.about-flow-stage')?.remove();
+  cardFront.append(flow);
+  const codeLines = flow.querySelector('[data-code-lines]');
+  if (codeLines && !reducedMotion) {
+    const words = ['math','system model','algo', 'result'];
+    let wordIndex = 0;
+    let characters = 0;
+    const createLine = () => {
+      const line = document.createElement('div');
+      line.className = 'code-line';
+      line.innerHTML = '<span class="code-prefix"></span><span class="code-brace"></span><span class="code-word"></span><span class="code-brace"></span><i class="code-caret"></i>';
+      codeLines.append(line);
+      codeLines.style.setProperty('--visible-lines', Math.min(codeLines.children.length, 3));
+      return line;
+    };
+    const renderLine = (line, word, count) => {
+      const prefix = '\\begin';
+      line.children[0].textContent = prefix.slice(0, count);
+      line.children[1].textContent = count > prefix.length ? '{' : '';
+      line.children[2].textContent = word.slice(0, Math.max(0, count - prefix.length - 1));
+      line.children[3].textContent = count > prefix.length + word.length + 1 ? '}' : '';
+    };
+    codeLines.replaceChildren();
+    let activeLine = createLine();
+    const typeCode = () => {
+      if (document.hidden || !pinnedCard.classList.contains('is-about-flow')) {
+        window.setTimeout(typeCode, 400);
+        return;
+      }
+      const word = words[wordIndex];
+      const length = 6 + word.length + 2;
+      characters = Math.min(characters + 1, length);
+      renderLine(activeLine, word, characters);
+      if (characters < length) {
+        window.setTimeout(typeCode, 95);
+        return;
+      }
+      window.setTimeout(() => {
+        activeLine.classList.add('is-complete');
+        wordIndex = (wordIndex + 1) % words.length;
+        characters = 0;
+        activeLine = createLine();
+        if (codeLines.children.length <= 3) {
+          typeCode();
+          return;
+        }
+        window.requestAnimationFrame(() => codeLines.classList.add('is-shifting'));
+        window.setTimeout(() => {
+          codeLines.classList.add('without-motion');
+          codeLines.firstElementChild.remove();
+          codeLines.classList.remove('is-shifting');
+          window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+            codeLines.classList.remove('without-motion');
+            typeCode();
+          }));
+        }, 280);
+      }, 650);
+    };
+    window.setTimeout(typeCode, 500);
+  }
+}
 const desktopNav = document.querySelector('.desktop-nav');
 const navIndicator = desktopNav?.querySelector('.nav-indicator');
 const navLinks = [...(desktopNav?.querySelectorAll('a[href^="#"]') || [])];
@@ -49,7 +146,7 @@ const finishLoading = () => {
 if (reducedMotion) finishLoading();
 else {
   const greeting = document.querySelector('[data-greeting]');
-  const greetings = ['HELLO', 'CIAO', 'HOLA', 'SALUT', '你好', 'ПРИВЕТ', 'HALLO', 'OLÁ', 'SELAM', 'مرحبا'];
+  const greetings = ['HELLO', 'CIAO', 'HOLA', 'SALUT', '你好', 'こんにちは', 'HALLO', 'OLÁ', '안녕하세요', 'مرحبا'];
   let greetingIndex = 0;
   const greetingTimer = window.setInterval(() => {
     greetingIndex += 1;
@@ -63,6 +160,23 @@ window.setTimeout(finishLoading, 3200);
 let lastScroll = window.scrollY;
 const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 const mix = (from, to, amount) => from + (to - from) * clamp(amount);
+const documentTop = (element) => {
+  let top = 0;
+  for (let node = element; node; node = node.offsetParent) top += node.offsetTop;
+  return top;
+};
+const abilityCardFlowTop = (index) => {
+  if (!abilityList || !abilityCards[index]) return 0;
+  const listStyle = getComputedStyle(abilityList);
+  let top = documentTop(abilityList)
+    + (Number.parseFloat(listStyle.borderTopWidth) || 0)
+    + (Number.parseFloat(listStyle.paddingTop) || 0);
+  for (let i = 0; i < index; i += 1) {
+    top += abilityCards[i].offsetHeight
+      + (Number.parseFloat(getComputedStyle(abilityCards[i]).marginBottom) || 0);
+  }
+  return top;
+};
 
 const positionNavIndicator = (left, width, activeLink) => {
   if (!desktopNav || !navIndicator || !activeLink) return;
@@ -124,8 +238,19 @@ const updatePinnedCard = (current) => {
   }
   const aboutTop = aboutSection?.offsetTop || 5200;
   const skillsTop = skillsSection?.offsetTop || window.innerHeight;
-  const arrivalEnd = Math.max(window.innerHeight * 2.8, aboutTop - window.innerHeight * .18);
-  const p = clamp(current / arrivalEnd);
+  const firstCardTop = abilityCards[0]
+    ? abilityCardFlowTop(0)
+    : skillsTop + window.innerHeight * .4;
+  const thirdCardTop = abilityCards[2]
+    ? abilityCardFlowTop(2)
+    : firstCardTop + window.innerHeight * 1.4;
+  const returnStart = Math.max(thirdCardTop + 1, aboutTop - window.innerHeight * 1.05);
+  const returnEnd = Math.max(returnStart + 1, aboutTop - window.innerHeight * .15);
+  let p;
+  if (current < firstCardTop) p = mix(0, .2, current / Math.max(1, firstCardTop));
+  else if (current < thirdCardTop) p = mix(.2, .45, (current - firstCardTop) / Math.max(1, thirdCardTop - firstCardTop));
+  else if (current < returnStart) p = mix(.45, .8, (current - thirdCardTop) / Math.max(1, returnStart - thirdCardTop));
+  else p = mix(.8, 1, (current - returnStart) / (returnEnd - returnStart));
   const aboutRect = aboutPanel?.getBoundingClientRect();
   const contentRect = aboutContent?.getBoundingClientRect();
   const baseTop = Number.parseFloat(getComputedStyle(pinnedCard).top) || window.innerHeight * .42;
@@ -149,6 +274,7 @@ const updatePinnedCard = (current) => {
   const researchExit = researchExitProgress * researchExitProgress * (3 - 2 * researchExitProgress);
   const scale = mix(mix(1, 1.2, researchEnter), 1, researchExit);
   pinnedCard.classList.toggle('is-research-active', researchEnter > .08 && researchExit < .94);
+  pinnedCard.classList.toggle('is-about-flow', current >= returnStart);
   const panelHeight = aboutPanel?.offsetHeight || window.innerHeight;
   const fadeStart = aboutTop + Math.min(panelHeight * .58, window.innerHeight * .62);
   const fadeEnd = aboutTop + Math.min(panelHeight * .9, window.innerHeight * .94);
@@ -220,11 +346,34 @@ if (!reducedMotion && finePointer) {
 
   const settleToNearbySection = () => {
     const closest = snapSections.reduce((best, section) => {
-      const distance = Math.abs(section.offsetTop - wheelTarget);
-      return !best || distance < best.distance ? { section, distance } : best;
+      // Do not snap into the research timeline before the preceding
+      // scroll-driven statement has finished revealing its last characters.
+      if (section.id === 'journey' && scrollStatement
+        && wheelTarget < documentTop(scrollStatement) + window.innerHeight * .28) return best;
+      let target = section.offsetTop;
+      if (section.id === 'journey' && recognitionHeading && recognitionRail) {
+        target = (documentTop(recognitionHeading) + documentTop(recognitionRail)
+          + recognitionRail.offsetHeight) / 2 - window.innerHeight / 2;
+      }
+      if (section.id === 'work' && researchHeading && researchLink) {
+        const contentTop = documentTop(researchHeading);
+        const contentBottom = documentTop(researchLink) + researchLink.offsetHeight;
+        const navClearance = (desktopNav?.offsetHeight || 0) + 36;
+        const safeViewportCenter = (window.innerHeight - navClearance) / 2;
+        target = (contentTop + contentBottom) / 2 - safeViewportCenter;
+      }
+      if (section.id === 'career' && timelineHeading && timelineList) {
+        const contentTop = documentTop(timelineHeading);
+        const contentBottom = documentTop(timelineList) + timelineList.offsetHeight;
+        const navClearance = (desktopNav?.offsetHeight || 0) + 36;
+        const safeViewportCenter = (window.innerHeight - navClearance) / 2;
+        target = (contentTop + contentBottom) / 2 - safeViewportCenter;
+      }
+      const distance = Math.abs(target - wheelTarget);
+      return !best || distance < best.distance ? { section, target, distance } : best;
     }, null);
     if (closest && closest.distance < window.innerHeight * .42) {
-      wheelTarget = closest.section.offsetTop;
+      wheelTarget = closest.target;
       document.documentElement.classList.add('is-wheel-smoothing');
       requestWheelMotion();
     }
@@ -487,6 +636,47 @@ class SaddleSurface {
 const saddleCanvas = document.querySelector('#saddle-canvas');
 if (saddleCanvas) new SaddleSurface(saddleCanvas);
 
+document.querySelectorAll('.research-card--cover').forEach((paperCard) => {
+  const summary = paperCard.querySelector('.paper-summary');
+  const toggle = paperCard.querySelector('.paper-summary-toggle');
+  const summaryName = paperCard.classList.contains('research-card--siot') ? '論文摘要' : '研究摘要';
+  let hovering = false;
+  let pinnedOpen = false;
+  let focusOnImage = false;
+  const updateSummary = () => {
+    const open = hovering || pinnedOpen || focusOnImage;
+    paperCard.classList.toggle('is-summary-open', open);
+    summary.inert = !open;
+    summary.setAttribute('aria-hidden', String(!open));
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', `${open ? '收起' : '展開'}${summaryName}`);
+  };
+  paperCard.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'touch') return;
+    hovering = true;
+    updateSummary();
+  });
+  paperCard.addEventListener('pointerleave', () => {
+    hovering = false;
+    updateSummary();
+  });
+  paperCard.addEventListener('focusin', (event) => {
+    focusOnImage = event.target.classList.contains('paper-cover-art');
+    updateSummary();
+  });
+  paperCard.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      focusOnImage = document.activeElement?.classList.contains('paper-cover-art') || false;
+      updateSummary();
+    }, 0);
+  });
+  toggle.addEventListener('click', () => {
+    pinnedOpen = !pinnedOpen;
+    updateSummary();
+  });
+  updateSummary();
+});
+
 document.querySelector('.about-actions button')?.addEventListener('click', async (event) => {
   const button = event.currentTarget;
   try {
@@ -551,3 +741,50 @@ const updateScrollStatement = () => {
 window.addEventListener('scroll', updateScrollStatement, { passive:true });
 window.addEventListener('resize', updateScrollStatement);
 updateScrollStatement();
+
+const satelliteScene = document.querySelector('.research-card--satellite .satellite-dynamic');
+if (satelliteScene) {
+  const orbits = [...satelliteScene.querySelectorAll('[data-satellite-orbit]')];
+  const satellites = [...satelliteScene.querySelectorAll('[data-satellite]')];
+  const links = [...satelliteScene.querySelectorAll('[data-satellite-link]')];
+  const packets = [...satelliteScene.querySelectorAll('[data-satellite-packet]')];
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const startedAt = performance.now();
+  let visible = false;
+  let frameId = 0;
+
+  const drawSatelliteScene = (now) => {
+    frameId = 0;
+    const state = getSatelliteFrame(orbits, motionPreference.matches ? 0 : now - startedAt);
+    state.satellites.forEach(({ x, y }, index) => {
+      satellites[index].setAttribute('transform', `translate(${x} ${y})`);
+    });
+    state.links.forEach(({ from, to }, index) => {
+      const line = links[index];
+      line.setAttribute('x1', from.x);
+      line.setAttribute('y1', from.y);
+      line.setAttribute('x2', to.x);
+      line.setAttribute('y2', to.y);
+    });
+    state.packets.forEach(({ x, y, progress }, index) => {
+      packets[index].setAttribute('transform', `translate(${x} ${y})`);
+      packets[index].style.opacity = Math.min(1, progress * 10, (1 - progress) * 10);
+    });
+    if (visible && !document.hidden && !motionPreference.matches) frameId = requestAnimationFrame(drawSatelliteScene);
+  };
+
+  const syncSatelliteScene = () => {
+    if (frameId) cancelAnimationFrame(frameId);
+    frameId = 0;
+    drawSatelliteScene(performance.now());
+  };
+  const observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) syncSatelliteScene();
+    else if (frameId) { cancelAnimationFrame(frameId); frameId = 0; }
+  }, { rootMargin: '100px' });
+  observer.observe(satelliteScene);
+  document.addEventListener('visibilitychange', syncSatelliteScene);
+  motionPreference.addEventListener('change', syncSatelliteScene);
+  drawSatelliteScene(startedAt);
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="衛星軌道與地面站背景">
+  <defs>
+    <radialGradient id="warmth"><stop stop-color="#f6ce8e" stop-opacity=".38"/><stop offset="1" stop-color="#f6ce8e" stop-opacity="0"/></radialGradient>
+    <linearGradient id="earth" x2="0" y2="1"><stop stop-color="#f1eee4"/><stop offset="1" stop-color="#fffdf7"/></linearGradient>
+  </defs>
+  <rect width="1000" height="1000" fill="#fdfdf9"/>
+  <circle cx="630" cy="315" r="235" fill="url(#warmth)"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M500 190 C715 190 890 276 890 382 C890 488 715 574 500 574 C285 574 110 488 110 382 C110 276 285 190 500 190 Z" stroke="#c9c8c1" stroke-width="2" stroke-dasharray="5 12"/>
+    <path d="M830 245 C864 317 743 445 561 531 C379 617 204 627 170 555 C136 483 257 355 439 269 C621 183 796 173 830 245 Z" stroke="#e9a855" stroke-opacity=".72" stroke-width="2"/>
+    <path d="M820 510 C787 587 617 601 440 540 C263 479 147 367 180 290 C213 213 383 199 560 260 C737 321 853 433 820 510 Z" stroke="#c9c8c1" stroke-width="2"/>
+  </g>
+  <g opacity=".72" fill="none" stroke="#dfad6c" stroke-width="1.5">
+    <circle cx="739" cy="275" r="102"/><circle cx="739" cy="275" r="139" stroke-opacity=".5"/>
+    <path d="M638 275h202M739 174v202" stroke-opacity=".35"/>
+  </g>
+  <g fill="#fffaf0" stroke="#dcb27c" stroke-width="2">
+    <rect x="417" y="394" width="39" height="39" rx="5"/>
+    <rect x="470" y="394" width="39" height="39" rx="5"/>
+    <rect x="523" y="394" width="39" height="39" rx="5"/>
+  </g>
+  <path d="M436 433v30l99 59M490 433v40l45 49M542 433v47l-7 42" fill="none" stroke="#b9a991" stroke-width="2" stroke-dasharray="4 7"/>
+  <path d="M-40 970C85 743 258 658 499 685c218 23 390 127 541 285" fill="url(#earth)" stroke="#d6d4cc" stroke-width="2"/>
+  <path d="M80 858c167-122 312-124 449-78m71 29c100 30 175 81 249 143" fill="none" stroke="#e1ded5" stroke-width="2"/>
+  <g transform="translate(667 755)" fill="none" stroke="#3a3834" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-19 30V0l19-19L19 0v30M-31 30h62M-27 37h54" stroke-width="3"/>
+    <path d="M-48-17q48-47 96 0M-33-6q33-32 66 0" stroke="#e58100" stroke-width="2"/>
+  </g>
+  <g fill="#98938b" font-family="monospace" font-size="14" letter-spacing="2"><text x="64" y="76">SATELLITE · EDGE AI</text><text x="64" y="915">MODEL / TASK / ROUTE / THERMAL</text></g>
+</svg>
